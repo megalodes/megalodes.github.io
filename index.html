@@ -69,6 +69,11 @@
     .contact .c-item{ color:var(--muted); font-size:16px; line-height:1.2; display:flex; align-items:center; gap:6px; direction:ltr }
     .contact .c-item svg{ width:16px; height:16px; color:var(--ink) }
     .contact .c-item a{ color:#ffffff; font-weight:700; text-decoration:none }
+    /* استخدم الخط الافتراضي (Cairo/النظام) لقسم التواصل بدلاً من TS */
+    .contact, .contact .c-item, .contact .c-item a{
+      font-family: "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      font-weight:600;
+    }
     .contact .c-item a:hover{ text-decoration:underline }
 
     /* الشبكة: 3 أعمدة دائمًا */
@@ -242,6 +247,39 @@
     /* موبايل: توزيع أوضح مع أعمدة تلقائية */
     @media (max-width: 600px){
       :root{ --radius:14px; }
+      /* على الهاتف: اجعل العناوين في الوسط وبخط TS الجديد */
+      h1, h2, h3, h4, h5, h6,
+      .section-title{
+        text-align:center;
+        margin-left:auto; margin-right:auto;
+        font-family:"TS Block Bold", "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        font-weight:normal; /* تأكد من استخدام ملف الخط الجديد */
+        /* اجعل العنوان يلتف ولا يُقصّ على الشاشات الصغيرة */
+        width:auto;               /* إلغاء max-content */
+        max-width:100%;
+        white-space:normal;
+        overflow-wrap:anywhere;   /* يسمح بالتفاف الكلمات الطويلة */
+      }
+      /* تحسين شريط الترويسة على الشاشات الصغيرة */
+      .bar{ gap:12px }
+      /* صورة على اليسار والمعلومات على يمينها */
+      .bar.contact-bar{ flex-direction:row; align-items:center; justify-content:flex-start; padding-left:10px; padding-right:10px; direction:ltr }
+      .avatar{ width:56px; height:56px; box-shadow:0 0 0 2px color-mix(in oklab, var(--brand) 82%, #000 10%), 0 6px 18px #0008 }
+      /* جعل الرقم والإنستغرام متوازيين ومصغّرين ليتّسعا */
+      .contact{ flex-direction:row; align-items:center; justify-content:flex-start; gap:10px; direction:ltr; flex-wrap:nowrap }
+      .contact .c-item{ gap:6px; font-size:13px }
+      .contact .c-item svg{ width:14px; height:14px }
+      .contact .c-item a{ white-space:nowrap }
+      /* إبراز حساب إنستغرام */
+      .contact .c-item[title="Instagram"] a{
+        font-family:"Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        font-weight:600; letter-spacing:0; font-size:13px; text-transform:none;
+      }
+      /* تصغير رقم واتساب ومنع تقطيعه إلى أسطر متعددة */
+      .contact .c-item[title="WhatsApp"] a{
+        font-family:"Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        font-size:13px; opacity:.95; white-space:nowrap; direction:ltr; font-weight:600;
+      }
       .gallery{ padding:8px 10px 24px; }
       .grid{ grid-template-columns:repeat(3, 1fr); gap:4px; }
       .bg-grid{ grid-template-columns:9fr 16fr; gap:4px }
@@ -723,19 +761,8 @@
     </a>
   </footer>
   <script>
-    // حظر النقر بزر الفأرة الأيمن (القائمة السياقية)
-    document.addEventListener('contextmenu', (e) => { e.preventDefault(); }, { capture:true });
-
-    // منع فتح أدوات المطوّر والاختصارات الشائعة: F12, Ctrl+Shift+I/J/C, Ctrl/Cmd+U/S/P
-    document.addEventListener('keydown', (e) => {
-      const k = (e.key || '').toUpperCase();
-      const ctrl = e.ctrlKey || e.metaKey;
-      const shift = e.shiftKey;
-
-      if (k === 'F12' || e.keyCode === 123) { e.preventDefault(); return; }
-      if (ctrl && shift && ['I','J','C'].includes(k)) { e.preventDefault(); return; }
-      if (ctrl && ['U','S','P'].includes(k)) { e.preventDefault(); return; }
-    }, { capture:true });
+    // السماح بالنقر بزر الفأرة الأيمن وفتح أدوات المطور: إزالة أي حظر.
+    // ملاحظة: أبقينا فقط منع سحب الصور.
 
     // منع سحب الصور لتنزيلها
     document.addEventListener('dragstart', (e) => {
@@ -751,71 +778,13 @@
     else disableImgDrag();
     new MutationObserver(disableImgDrag).observe(document.documentElement, { childList:true, subtree:true });
   </script>
-  <!-- طبقة تغطية بيضاء لمنع اللقطات (محاولة واجهة فقط) -->
-  <div id="anti-ss" aria-hidden="true" style="position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:2147483647;transition:opacity .18s ease;"></div>
+  <!-- إزالة طبقة التغطية البيضاء ومنع أي تأثيرات بيضاء عند فتح الأدوات -->
+  <!-- عنصر التغطية يُترك موجودًا لكنه غير مُستخدم -->
+  <div id="anti-ss" aria-hidden="true" style="position:fixed;inset:0;opacity:0;pointer-events:none;z-index:-1;transition:opacity .18s ease;"></div>
   <script>
-    (function(){
-      const overlay = document.getElementById('anti-ss');
-      let timer = null;
-      const show = (ms) => {
-        if(!overlay) return;
-        overlay.style.opacity = '1';
-        overlay.style.pointerEvents = 'auto';
-        document.documentElement.classList.add('anti-ss-on');
-        if (ms){
-          clearTimeout(timer);
-          timer = setTimeout(hide, ms);
-        }
-      };
-      const hide = () => {
-        if(!overlay) return;
-        overlay.style.opacity = '0';
-        overlay.style.pointerEvents = 'none';
-        document.documentElement.classList.remove('anti-ss-on');
-      };
-
-      // اجعل وظائف الإظهار/الإخفاء متاحة عالميًا للاستخدام من سكربتات أخرى
-      window.__antiSSShow = (ms) => show(ms);
-      window.__antiSSHide = () => hide();
-
-      // مفاتيح التقاط الشاشة الشائعة
-      document.addEventListener('keydown', async (e) => {
-        const k = (e.key || '').toUpperCase();
-        const ctrl = e.ctrlKey;
-        const meta = e.metaKey; // Cmd (mac) أو Win (windows)
-        const shift = e.shiftKey;
-
-        // PrintScreen (Windows)
-        if (k === 'PRINTSCREEN' || e.keyCode === 44){
-          e.preventDefault();
-          try { await navigator.clipboard.writeText(''); } catch(_) {}
-          show(2500);
-          return;
-        }
-        // Win+Shift+S (Windows snipping) — غالبًا نظامية، محاولة فقط
-        if (meta && shift && k === 'S'){
-          show();
-          return;
-        }
-        // Cmd+Shift+3/4/5 (macOS)
-        if (meta && shift && (k === '3' || k === '4' || k === '5')){
-          show();
-          return;
-        }
-      }, { capture:true });
-
-      // عند تغيّر الرؤية أو فقدان التركيز: إظهار الغطاء وإخفاؤه عند العودة
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState !== 'visible') show();
-        else hide();
-      });
-      window.addEventListener('blur', () => show());
-      window.addEventListener('focus', () => hide());
-
-      // في حال بقي الغطاء لأي سبب، أزله بعد تنقّل المستخدم داخل الصفحة
-      window.addEventListener('mousemove', () => hide(), { once:true });
-      window.addEventListener('touchstart', () => hide(), { once:true });
-    })();
+    // تعطيل أي منطق سابق للتغطية البيضاء بالكامل
+    window.__antiSSShow = () => {};
+    window.__antiSSHide = () => {};
   </script>
   <script>
     // كشف سحب ثلاث أصابع على الهواتف ثم تفتيح الشاشة 1 ثانية
@@ -874,67 +843,7 @@
       document.addEventListener('touchcancel',end,   { passive: true  });
     })();
   </script>
-  <script>
-    // منع كل أزرار الكيبورد على أجهزة الكمبيوتر (pointer:fine)
-    (function(){
-      const isComputer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
-      if (!isComputer) return;
-
-      const showOverlay = (ms) => {
-        const el = document.getElementById('anti-ss');
-        if (!el) return;
-        el.style.opacity = '1';
-        el.style.pointerEvents = 'auto';
-        document.documentElement.classList.add('anti-ss-on');
-        if (ms) setTimeout(() => {
-          el.style.opacity = '0';
-          el.style.pointerEvents = 'none';
-          document.documentElement.classList.remove('anti-ss-on');
-        }, ms);
-      };
-      const hideOverlay = () => {
-        const el = document.getElementById('anti-ss');
-        if (!el) return;
-        el.style.opacity = '0';
-        el.style.pointerEvents = 'none';
-        document.documentElement.classList.remove('anti-ss-on');
-      };
-      let releaseTimer = null;
-
-      const onKeyEvent = async (e) => {
-        const k = (e.key || '').toUpperCase();
-        const meta = e.metaKey; // Cmd/Win
-        const shift = e.shiftKey;
-
-        // محاولة إظهار التغطية البيضاء عند تركيبات لقطات الشاشة المعروفة
-        if (k === 'PRINTSCREEN' || e.keyCode === 44) {
-          try { await navigator.clipboard.writeText(''); } catch(_) {}
-          showOverlay(2500);
-        } else if (meta && shift && (k === 'S' || k === '3' || k === '4' || k === '5')) {
-          showOverlay(2000);
-        }
-
-        // اجعل الصفحة بيضاء عند أي ضغط زر (تظهر فورًا وتعود عند رفع الزر)
-        showOverlay();
-
-        e.preventDefault();
-        e.stopPropagation();
-        if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
-        return false;
-      };
-
-      // حظر keydown/keypress/keyup بالكامل
-      addEventListener('keydown', onKeyEvent, { capture:true });
-      addEventListener('keypress', (e)=>{ e.preventDefault(); e.stopPropagation(); }, { capture:true });
-      addEventListener('keyup',    (e)=>{
-        // أخفِ الغطاء بعد 1 ثانية من رفع الإصبع
-        if (releaseTimer) clearTimeout(releaseTimer);
-        releaseTimer = setTimeout(hideOverlay, 1000);
-        e.preventDefault();
-        e.stopPropagation();
-      }, { capture:true });
-    })();
-  </script>
+  <!-- إزالة حظر الكيبورد نهائيًا لعدم تعطيل أدوات المطوّر -->
  </body>
   </html>
 
