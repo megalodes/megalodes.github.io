@@ -10,6 +10,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
+    @font-face{
+      font-family: "TS Block Bold";
+      src: url("fonts/TS-Block-Bold.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
     :root{
       --bg:#0b0c0f; --ink:#e9eef7; --muted:#9aa3b2;
       --card:#111318; --radius:28px;
@@ -31,7 +38,8 @@
       );
       background-attachment: fixed; /* يبقي الخلفية ثابتة في المتصفحات الداعمة */
       overflow-x:hidden; overscroll-behavior-x:none; touch-action:pan-y;
-      font-family:"Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      font-family:"TS Block Bold", "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      line-height:1.35; /* منع ضغط النص عموديًا */
       font-size:18px;
     }
 
@@ -60,7 +68,7 @@
     .contact{ direction:rtl; display:flex; align-items:center; gap:28px }
     .contact .c-item{ color:var(--muted); font-size:16px; line-height:1.2; display:flex; align-items:center; gap:6px; direction:ltr }
     .contact .c-item svg{ width:16px; height:16px; color:var(--ink) }
-    .contact .c-item a{ color:var(--ink); font-weight:700; text-decoration:none }
+    .contact .c-item a{ color:#ffffff; font-weight:700; text-decoration:none }
     .contact .c-item a:hover{ text-decoration:underline }
 
     /* الشبكة: 3 أعمدة دائمًا */
@@ -88,7 +96,7 @@
     .bg-item{ width:96%; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start }
     .bg-label{
       display:inline-block; margin:0 0 6px 0;
-      font-size:13px; font-weight:800; line-height:1;
+      font-size:13px; font-weight:800; line-height:1.2; /* مساحة رأسية أوضح */
       color:var(--ink); background: color-mix(in oklab, var(--card) 88%, transparent);
       border:1px solid #ffffff22; border-radius:999px; padding:6px 10px;
       letter-spacing:.2px;
@@ -196,8 +204,9 @@
     .status:empty{ display:none }
 
     /* عنوان مع شارة خلفية (نيون) */
+    h1, h2, h3, h4, h5, h6{ color:#ffffff }
     .section-title{
-      margin:26px auto 26px; color:#000000; font-weight:900; font-size:24px;
+      margin:26px auto 26px; color:#ffffff; font-weight:900; font-size:24px;
       position:relative; width:max-content; text-align:center;
       padding:12px 28px 14px; letter-spacing:.2px; isolation:isolate;
     }
@@ -315,7 +324,7 @@
 
   <!-- Backgs Section -->
   <section class="gallery" id="bgs">
-    <h2 class="section-title">LOGO & COVER</h2>
+    <h2 class="section-title">LOGO & BANNER</h2>
     <div id="bg-grid" class="bg-grid"></div>
     <div id="bg-status" class="status">جاري التحميل…</div>
   </section>
