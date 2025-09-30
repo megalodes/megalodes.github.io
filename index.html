@@ -114,6 +114,10 @@
     .story-row{display:grid; gap:8px; width:100%}
     .story-row.row-3{grid-template-columns:repeat(3, minmax(0, 1fr))}
     .story-row.row-2{grid-template-columns:repeat(2, minmax(0, 1fr))}
+    /* السطر الثالث: تكبير اليسار 10px وتصغير اليمين 10px */
+    .story-grid > .story-row:nth-of-type(3).row-2{
+      grid-template-columns: calc(50% + 10px) calc(50% - 10px);
+    }
     .story-row.row-1{
       grid-template-columns:repeat(1, minmax(0, 1fr));
       width:clamp(300px, 85vw, 50rem);
@@ -784,9 +788,9 @@
     Thank you for watching
     <br />
     <a href="https://wa.me/962790108559" target="_blank" rel="noopener"
-       style="color:var(--brand); text-decoration:underline; font-weight:800;">
-      برمجة LaithDev
-    </a>
+       style="color:var(--brand); text-decoration:underline; font-weight:700; font-family: 'Cairo', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;">
+       برمجة LaithDev
+     </a>
   </footer>
   <script>
     // السماح بالنقر بزر الفأرة الأيمن وفتح أدوات المطور: إزالة أي حظر.
