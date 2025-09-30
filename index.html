@@ -148,6 +148,8 @@
     #stories .story-card, #stories .story-card img{ border-radius:var(--radius) }
     /* اجعل الصورة تملأ الإطار لضمان ظهور التدوير بوضوح */
     #stories .story-card img{ object-fit:cover }
+    /* صور مخصّصة للعرض الكامل بدون قص */
+    #stories .story-card.contain img{ object-fit:contain !important }
     
     /* تخصيص الصف الثاني لإبراز الصورة العمودية وشريكها */
     .story-row-tall-pair{
@@ -425,7 +427,9 @@
       "IMG-20250929-WA0005.jpg", // عيدكم مبارك (أزرق)
       "IMG-20250929-WA0010.jpg", // مرحبًا أصدقائي (أخضر)
       "IMG-20250929-WA0012.jpg", // متوفر معكم (أزرق)
-      "صورة واتساب بتاريخ 1447-04-07 في 23.54.06_b38b55e2.jpg",
+      // استبدال صورة السطر الثاني (اليسار) بصورتين غير مستخدمتين
+      "صورة واتساب بتاريخ 1447-04-08 في 20.19.26_dad9b8e6.jpg",
+      "صورة واتساب بتاريخ 1447-04-08 في 20.19.28_f4d89a6e.jpg",
       "IMG-20250929-WA0011.jpg",
       "IMG-20250929-WA0003.jpg",
       "IMG-20250929-WA0008.jpg",
@@ -459,7 +463,10 @@
     const STORY_ASPECT_OVERRIDES = {
       "IMG-20250929-WA0004.jpg": "2048 / 1256",
       "IMG-20250929-WA0011.jpg": "1",
-      "صورة واتساب بتاريخ 1447-04-07 في 23.54.06_b38b55e2.jpg": "1"
+      "صورة واتساب بتاريخ 1447-04-07 في 23.54.06_b38b55e2.jpg": "1",
+      // السطر الثالث: صورتان مستطيلتان — عرض بنسبة الأبعاد الحقيقية
+      "IMG-20250929-WA0003.jpg": "1024 / 821",
+      "IMG-20250929-WA0008.jpg": "1024 / 917"
     };
 
 
@@ -579,7 +586,7 @@
       }
     }
 
-    // عرض النشرات: شبكة صفوف (3 في الأول، 2 في الوسط، وأخيرة مستطيلة)
+    // عرض النشرات: شبكة صفوف (3 في الأول، السطر الثاني 3 صور، ثم 2 في البقية، وأخيرة مستطيلة)
     function renderStories(items){
       if(!storiesGrid) return;
       storiesGrid.innerHTML = '';
@@ -592,7 +599,7 @@
       if (!ordered.length){ setStoriesStatus('لا توجد نتائج.'); }
       else if(storiesStatusEl){ storiesStatusEl.textContent = ''; }
 
-      // شبكة الصفوف: صف أول ثلاثي، يليه صفوف ثنائية، مع بطاقة أخيرة مستطيلة بالأسفل
+      // شبكة الصفوف: صف أول ثلاثي، السطر الثاني ثلاثي (حسب الطلب)، ثم صفوف ثنائية، مع بطاقة أخيرة مستطيلة بالأسفل
       const TARGET_STORY = 'IMG-20250929-WA0004.jpg';
       const PORTRAIT_STORY = 'صورة واتساب بتاريخ 1447-04-07 في 23.54.06_b38b55e2.jpg';
       const SQUARE_PAIR_STORY = 'IMG-20250929-WA0011.jpg';
@@ -611,6 +618,10 @@
         const overrideAspect = STORY_ASPECT_OVERRIDES[name];
         if (overrideAspect) {
           card.style.setProperty('--story-aspect', overrideAspect);
+        }
+        // اجعل صور السطر الثالث (المستطيلة) تُعرض كاملة بدون قص
+        if (name === 'IMG-20250929-WA0003.jpg' || name === 'IMG-20250929-WA0008.jpg') {
+          card.classList.add('contain');
         }
 
         const img = document.createElement('img');
@@ -639,6 +650,16 @@
         const row = document.createElement('div');
         row.className = "story-row row-" + firstRowCount;
         for(let i=0; i<firstRowCount; i++){
+          row.appendChild(createStoryCard(ordered.shift()));
+        }
+        rows.push(row);
+      }
+
+      // السطر الثاني: 3 صور (لتصبح 3 صور كما طُلِب)
+      if (ordered.length >= 3) {
+        const row = document.createElement('div');
+        row.className = 'story-row row-3';
+        for (let i = 0; i < 3; i++) {
           row.appendChild(createStoryCard(ordered.shift()));
         }
         rows.push(row);
