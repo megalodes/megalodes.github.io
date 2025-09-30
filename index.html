@@ -743,7 +743,7 @@
     new MutationObserver(disableImgDrag).observe(document.documentElement, { childList:true, subtree:true });
   </script>
   <!-- طبقة تغطية بيضاء لمنع اللقطات (محاولة واجهة فقط) -->
-  <div id="anti-ss" aria-hidden="true" style="position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:2147483647;"></div>
+  <div id="anti-ss" aria-hidden="true" style="position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:2147483647;transition:opacity .18s ease;"></div>
   <script>
     (function(){
       const overlay = document.getElementById('anti-ss');
@@ -764,6 +764,10 @@
         overlay.style.pointerEvents = 'none';
         document.documentElement.classList.remove('anti-ss-on');
       };
+
+      // اجعل وظائف الإظهار/الإخفاء متاحة عالميًا للاستخدام من سكربتات أخرى
+      window.__antiSSShow = (ms) => show(ms);
+      window.__antiSSHide = () => hide();
 
       // مفاتيح التقاط الشاشة الشائعة
       document.addEventListener('keydown', async (e) => {
@@ -802,6 +806,63 @@
       // في حال بقي الغطاء لأي سبب، أزله بعد تنقّل المستخدم داخل الصفحة
       window.addEventListener('mousemove', () => hide(), { once:true });
       window.addEventListener('touchstart', () => hide(), { once:true });
+    })();
+  </script>
+  <script>
+    // كشف سحب ثلاث أصابع على الهواتف ثم تفتيح الشاشة 1 ثانية
+    (function(){
+      if (!('ontouchstart' in window)) return;
+      const isPhone = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      if (!isPhone) return;
+
+      let startTouches = null;
+      let swiped = false;
+
+      const start = (e) => {
+        if (e.touches.length === 3) {
+          startTouches = Array.from(e.touches).map(t => ({ x: t.clientX, y: t.clientY }));
+          swiped = false;
+        } else {
+          startTouches = null;
+        }
+      };
+      const move = (e) => {
+        if (!startTouches || e.touches.length !== 3) return;
+        const cur = Array.from(e.touches).map(t => ({ x: t.clientX, y: t.clientY }));
+        let maxDelta = 0;
+        for (let i = 0; i < 3; i++) {
+          const dx = (cur[i]?.x || 0) - (startTouches[i]?.x || 0);
+          const dy = (cur[i]?.y || 0) - (startTouches[i]?.y || 0);
+          const d = Math.hypot(dx, dy);
+          if (d > maxDelta) maxDelta = d;
+        }
+        if (maxDelta > 30 && !swiped) {
+          swiped = true;
+          try {
+            if (window.__antiSSShow) window.__antiSSShow(1000);
+            else {
+              const overlay = document.getElementById('anti-ss');
+              if (overlay) {
+                overlay.style.opacity = '1';
+                overlay.style.pointerEvents = 'auto';
+                document.documentElement.classList.add('anti-ss-on');
+                setTimeout(() => {
+                  overlay.style.opacity = '0';
+                  overlay.style.pointerEvents = 'none';
+                  document.documentElement.classList.remove('anti-ss-on');
+                }, 1000);
+              }
+            }
+          } catch (_) {}
+          if (e.cancelable) e.preventDefault();
+        }
+      };
+      const end = () => { startTouches = null; swiped = false; };
+
+      document.addEventListener('touchstart', start, { passive: false });
+      document.addEventListener('touchmove',  move,  { passive: false });
+      document.addEventListener('touchend',   end,   { passive: true  });
+      document.addEventListener('touchcancel',end,   { passive: true  });
     })();
   </script>
   <script>
