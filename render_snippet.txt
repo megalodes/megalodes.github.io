@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <title>LOGOS — معرض 3×</title>
+  <!-- Arabic-friendly font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#0b0c0f; --ink:#e9eef7; --muted:#9aa3b2;
+      --card:#111318; --radius:28px;
+      --brand:#1569C7; /* لون التدرّج المطلوب */
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f6f8fb; --ink:#0b0c0f; --muted:#556074; --card:#ffffff; }
+    }
+
+    /* منع السحب/القلب الأفقي */
+    html,body{
+      margin:0; padding:0; color:var(--ink);
+      /* خلفية افتراضية + تثبيت كاحتياط */
+      background: linear-gradient(45deg,
+        #f3f6ff 0%,
+        #dde9ff 28%,
+        #b9d2fb 55%,
+        var(--brand) 100%
+      );
+      background-attachment: fixed; /* يبقي الخلفية ثابتة في المتصفحات الداعمة */
+      overflow-x:hidden; overscroll-behavior-x:none; touch-action:pan-y;
+      font-family:"Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial
+    }
+
+    /* طبقة خلفية ثابتة 100% تعمل أيضاً على iOS/Safari */
+    body::before{
+      content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+      background: linear-gradient(45deg,
+        #f3f6ff 0%,
+        #dde9ff 28%,
+        #b9d2fb 55%,
+        var(--brand) 100%
+      );
+    }
+    *{box-sizing:border-box}
+
+    /* هيدر بسيط */
+    /* هيدر أزرق غامق مريح */
+    .hero{position:sticky; top:0; z-index:3; background:linear-gradient(135deg,#0a214a 0%,#0b2f73 60%,#0a214a 100%); border-bottom:1px solid #ffffff14; margin:0}
+    .wrap{max-width:1400px; margin:0 auto; padding:14px 16px}
+    .hero .wrap{ max-width:none; padding-left:0; padding-right:0; padding-top:20px; padding-bottom:20px }
+    .bar{display:flex; align-items:center; gap:16px}
+    /* ترويسة جديدة: الصورة دائرية يسارًا ومعلومات تواصل */
+    .contact-bar{ direction:ltr; justify-content:flex-start; padding-left:24px }
+    /* دويرة بارزة حول اللوغو (الأفاتار) */
+    .avatar{ width:72px; height:72px; border-radius:999px; object-fit:cover; border:2px solid #ffffff22; box-shadow:0 0 0 3px color-mix(in oklab, var(--brand) 82%, #000 10%), 0 8px 22px #0008 }
+    .contact{ direction:rtl; display:flex; align-items:center; gap:28px }
+    .contact .c-item{ color:var(--muted); font-size:16px; line-height:1.2; display:flex; align-items:center; gap:6px; direction:ltr }
+    .contact .c-item svg{ width:16px; height:16px; color:var(--ink) }
+    .contact .c-item a{ color:var(--ink); font-weight:700; text-decoration:none }
+    .contact .c-item a:hover{ text-decoration:underline }
+
+    /* الشبكة: 3 أعمدة دائمًا */
+    .gallery{max-width:1400px; margin:0 auto; padding:22px 10px 60px}
+    .grid{display:grid; gap:8px; grid-template-columns:repeat(3, 1fr)}
+
+    /* Backgs section: wide thumbnails */
+    .bg-grid{display:grid; gap:8px; grid-template-columns:9fr 16fr; direction:ltr}
+    .bg-card{
+      position:relative; aspect-ratio:16/9; width:96%; margin:0 auto;
+      border-radius:var(--radius); background:var(--card);
+      border:1px solid #2a2f3a; box-shadow:0 22px 60px rgba(0,0,0,.40);
+      overflow:hidden; cursor:zoom-in; transition:.18s ease;
+    }
+    .bg-card.logo{ aspect-ratio:1/1 }
+    .bg-card.banner{ aspect-ratio:16/9 }
+    .bg-card:hover{ transform:translateY(-3px) }
+    .bg-card img{ width:100%; height:100%; display:block; object-fit:cover; border-radius:0; transition:opacity .25s ease }
+
+    /* إلغاء الشارات فوق الصور لصالح تسميات أعلى الصور */
+    .bg-card.logo::before,
+    .bg-card.banner::before{ content:none !important }
+
+    /* عنصر التفاف لكل بطاقة خلفيات + تسمية أعلى الصورة */
+    .bg-item{ width:96%; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start }
+    .bg-label{
+      display:inline-block; margin:0 0 6px 0;
+      font-size:13px; font-weight:800; line-height:1;
+      color:var(--ink); background: color-mix(in oklab, var(--card) 88%, transparent);
+      border:1px solid #ffffff22; border-radius:999px; padding:6px 10px;
+      letter-spacing:.2px;
+    }
+    /* اجعل البطاقة داخل الغلاف بعرض كامل */
+    .bg-item > .bg-card{ width:100%; margin:0 }
+
+    /* Stories section: صف أول بثلاث صور، بقية الصفوف صورتان، والأخيرة مفردة */
+    .story-grid{display:flex; flex-direction:column; gap:12px; direction:ltr}
+    .story-row{display:grid; gap:8px; width:100%}
+    .story-row.row-3{grid-template-columns:repeat(3, minmax(0, 1fr))}
+    .story-row.row-2{grid-template-columns:repeat(2, minmax(0, 1fr))}
+    .story-row.row-1{
+      grid-template-columns:repeat(1, minmax(0, 1fr));
+      width:clamp(300px, 85vw, 50rem);
+      max-width:100%;
+      margin:0 auto;
+      align-self:center;
+      justify-items:center;
+    }
+    .story-row.row-1 .story-card{
+      width:100%;
+    }
+    .story-card{
+      position:relative; aspect-ratio:1/1; width:100%; margin:0;
+      border-radius:var(--radius);
+      background:transparent; border:none; box-shadow:none;
+      overflow:hidden; cursor:zoom-in; transition:.18s ease;
+    }
+    .story-card-wide{ 
+      aspect-ratio:4/3; 
+      border-radius:calc(var(--radius) * 0.8);
+      box-shadow:0 22px 60px rgba(0,0,0,.25);
+      border:1px solid #2a2f3a;
+    }
+    .story-img-wide{ 
+      object-fit:cover; 
+      aspect-ratio:4/3;
+    }
+    /* حواف أكثر دائرية لبطاقة معيّنة */
+    .story-card.rounded{ border-radius:34px }
+    .story-card:hover{ transform:translateY(-3px) }
+    .story-card img{ width:100%; height:100%; display:block; object-fit:contain; background:transparent; border-radius:inherit; transition:opacity .25s ease }
+    /* الصور داخل قسم المنشورات تبقى مربعة */
+    #stories .story-card, #stories .story-card img{ border-radius:var(--radius) }
+    /* اجعل الصورة تملأ الإطار لضمان ظهور التدوير بوضوح */
+    #stories .story-card img{ object-fit:cover }
+    
+    /* تخصيص الصف الثاني لإبراز الصورة العمودية وشريكها */
+    .story-row-tall-pair{
+      align-items:center;
+      justify-content:center;
+      margin-left:auto;
+      margin-right:auto;
+      width:100%;
+      gap:8px;
+    }
+    .story-row-tall-pair .story-card{
+      width:100%;
+    }
+    .story-row-tall-pair--portrait-first{
+      grid-template-columns:minmax(0,0.42fr) minmax(0,0.58fr);
+    }
+    .story-row-tall-pair--square-first{
+      grid-template-columns:minmax(0,0.58fr) minmax(0,0.42fr);
+    }
+    .story-card-portrait{
+      aspect-ratio:13/18;
+    }
+    .story-card-paired-square{
+      aspect-ratio:1/1;
+    }
+    .story-row-tall-pair .story-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:inherit;
+    }
+    
+    
+    
+
+    /* البطاقة: مربع بزوايا مستديرة — التدوير على الحاوية فقط */
+    .card{
+      position:relative; aspect-ratio:1/1;
+      margin:0 auto; /* إزالة الهامش الجانبي وتوسيط الكرت */
+      width:96%;     /* تصغير الكرت نفسه قليلًا */
+      border-radius:var(--radius);
+      background:var(--card);
+      border:1px solid #2a2f3a;            /* يوضح أركان المربّع */
+      box-shadow:0 22px 60px rgba(0,0,0,.40);
+      overflow:hidden;                      /* يقص الصورة داخل المربّع */
+      cursor:zoom-in; transition:.18s ease;
+    }
+    .card:hover{ transform:translateY(-3px) }
+
+    /* الصورة: لا أي تدوير ولا ماسك */
+    .card img{
+      width:100%; height:100%; display:block;
+      object-fit:cover;     /* تعبئة المربع */
+      border-radius:0;      /* مهم: لمنع الشكل الدائري */
+      /* ممنوع: mask-image / clip-path / border-radius كبير */
+      transition:opacity .25s ease;
+    }
+
+    .status{text-align:center; color:var(--muted); padding:12px 10px; font-size:14px}
+    .status:empty{ display:none }
+
+    /* عنوان مع شارة خلفية (نيون) */
+    .section-title{
+      margin:26px auto 26px; color:var(--ink); font-weight:900; font-size:22px;
+      position:relative; width:max-content; text-align:center;
+      padding:12px 28px 14px; letter-spacing:.2px; isolation:isolate;
+    }
+    .section-title::before, .section-title::after{
+      content:""; position:absolute; inset:0; border-radius:12px;
+      /* شكل الشارة */
+      clip-path: polygon(0% 74%, 8% 84%, 94% 84%, 96% 84%, 100% 50%, 96% 16%, 86% 16%, 82% 25%, 78% 16%, 8% 16%, 8% 44%, 0% 60%, 8% 76%, 8% 84%);
+    }
+    /* إطار أزرق وتوهّج */
+    .section-title::before{
+      transform: scale(1.03);
+      background:#3c59ff;
+      filter: drop-shadow(0 10px 26px rgba(60,89,255,.45)) drop-shadow(0 0 18px rgba(91,126,255,.55));
+      opacity:.95; z-index:-2;
+    }
+    /* تعبئة داخلية متدرجة */
+    .section-title::after{
+      background: linear-gradient(180deg, rgba(140,166,255,.96) 0%, rgba(109,140,255,.95) 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.35);
+      filter: drop-shadow(0 6px 14px rgba(74,116,255,.45));
+      z-index:-1;
+    }
+    @media (min-width: 900px){
+      .section-title{ font-size:24px; padding:14px 34px 16px }
+    }
+    /* تحسين المسافات بين الأقسام */
+    .gallery{ padding:24px 12px 28px }
+    /* زيادة الفصل بين الأقسام التالية */
+    .gallery + .gallery{ margin-top:32px }
+
+    /* لايت بوكس */
+    dialog#lightbox{ border:none; padding:0; background:transparent }
+    dialog#lightbox[open]{ position:fixed; inset:0; display:grid; place-items:center; background:transparent }
+    .lb-backdrop{ position:fixed; inset:0; background:#000b; backdrop-filter:blur(2px) }
+    .lb-card{ width:auto; max-width:90vw; max-height:90vh; background:var(--card); border-radius:32px; overflow:hidden; border:1px solid #ffffff2a; display:flex; flex-direction:column; align-items:center }
+    .lb-img{ display:block; width:auto; height:auto; max-width:90vw; max-height:calc(90vh - 56px); object-fit:contain; background:#0b0b0b; margin:0 auto; border-radius:24px }
+    .lb-bar{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 16px; border-top:1px solid #ffffff14 }
+    .lb-name{ display:none }
+    @media (min-width: 900px){
+      .lb-card{ max-width:70vw }
+      .lb-img{ max-width:70vw }
+
+      /* على الكمبيوتر: اجعل ارتفاع البنر مساوٍ لارتفاع اللوغو في الصف نفسه */
+      .bg-grid{ align-items:stretch }
+      .bg-card.banner{ height:100%; aspect-ratio:auto }
+    }
+    .btn{background:linear-gradient(180deg, color-mix(in oklab, var(--card) 86%, transparent), color-mix(in oklab, var(--card) 100%, #000 6%)); border:1px solid #ffffff24; color:var(--ink); border-radius:999px; padding:10px 14px; font-weight:700; cursor:pointer}
+
+    /* موبايل: توزيع أوضح مع أعمدة تلقائية */
+    @media (max-width: 600px){
+      :root{ --radius:14px; }
+      .gallery{ padding:8px 10px 24px; }
+      .grid{ grid-template-columns:repeat(3, 1fr); gap:4px; }
+      .bg-grid{ grid-template-columns:9fr 16fr; gap:4px }
+      /* للهاتف: الحفاظ على التوزيع مع تقليل الهوامش */
+      .story-grid{ gap:10px }
+      .story-row{ gap:6px }
+      .story-card.rounded{ border-radius:26px }
+      .story-row.row-1{
+        width:clamp(250px, 90vw, 40rem);
+      }
+    }
+
+    /* شاشات أصغر جدًا: هوامش أصغر للمربعات */
+    @media (max-width: 400px){
+      .grid{ grid-template-columns:repeat(3, 1fr); gap:2px; }
+      .bg-grid{ grid-template-columns:9fr 16fr; gap:2px }
+      .story-row{ gap:4px }
+    }
+
+    /* كمبيوتر: شبكة أوسع وعدة أعمدة */
+    @media (min-width: 1024px){
+      .grid{ grid-template-columns:repeat(5, 1fr); gap:12px; }
+      .bg-grid{ grid-template-columns:1fr 2fr; gap:12px }
+      .card, .bg-card, .story-card{ width:100% }
+      .story-row.row-1{
+        width:clamp(400px, 75vw, 55rem);
+      }
+    }
+
+    /* شاشات كبيرة جدًا */
+    @media (min-width: 1600px){
+      .grid{ grid-template-columns:repeat(6, 1fr); gap:14px }
+      .lb-card{ max-width:60vw }
+      .lb-img{ max-width:60vw }
+      .story-row.row-1{
+        width:clamp(500px, 70vw, 60rem);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="bar contact-bar">
+        <img class="avatar" src="صورة واتساب بتاريخ 1447-04-06 في 13.40.02_835061ea.jpg" alt="profile" />
+        <div class="contact">
+          <div class="c-item" title="WhatsApp">
+            <svg viewBox="0 0 16 16" fill="currentColor" class="bi bi-whatsapp" aria-hidden="true">
+              <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+            </svg>
+            <a href="https://wa.me/963986744483" target="_blank" rel="noopener noreferrer" dir="ltr">+963 986 744 483</a>
+          </div>
+          <div class="c-item" title="Instagram">
+            <svg viewBox="0 0 16 16" fill="currentColor" class="bi bi-instagram" aria-hidden="true">
+              <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/>
+            </svg>
+            <a href="https://instagram.com/Megalo.des" target="_blank" rel="noopener noreferrer">Megalo.des</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="gallery">
+    <h2 class="section-title">LOGO</h2>
+    <div id="grid" class="grid"></div>
+    <div id="status" class="status">جاري التحميل…</div>
+  </main>
+
+  <!-- Backgs Section -->
+  <section class="gallery" id="bgs">
+    <h2 class="section-title">LOGO & COVER</h2>
+    <div id="bg-grid" class="bg-grid"></div>
+    <div id="bg-status" class="status">جاري التحميل…</div>
+  </section>
+
+  <!-- Stories Section -->
+  <section class="gallery" id="stories">
+    <h2 class="section-title">POSTERS SOCIAL MEDIA</h2>
+    <div id="stories-grid" class="story-grid"></div>
+    <div id="stories-status" class="status">جاري التحميل…</div>
+  </section>
+
+
+
+  <!-- Lightbox -->
+  <div id="backdrop" class="lb-backdrop" hidden></div>
+  <dialog id="lightbox">
+    <div class="lb-card">
+      <img id="lb-img" class="lb-img" alt="logo preview" />
+      <div class="lb-bar">
+        <span id="lb-name" class="lb-name" style="color:var(--muted);font-size:13px"></span>
+        <button class="btn" id="close">إغلاق</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    /* حدّث القائمة حسب ملفاتك داخل مجلد LOGOS */
+    window.FILE_LIST = [
+      "IMG-20250926-WA0002.jpg", /* تمت إضافة اللوغو الناقص */
+      "IMG-20250926-WA0003.jpg","IMG-20250926-WA0004.jpg","IMG-20250926-WA0005.jpg","IMG-20250926-WA0006.jpg",
+      "IMG-20250926-WA0007.jpg","IMG-20250926-WA0008.jpg","IMG-20250926-WA0009.jpg","IMG-20250926-WA0010.jpg",
+      "IMG-20250926-WA0011.jpg","IMG-20250926-WA0012.jpg","IMG-20250926-WA0013.jpg","IMG-20250926-WA0014.jpg",
+      "IMG-20250926-WA0015.jpg","IMG-20250926-WA0016.jpg","IMG-20250926-WA0017.jpg","IMG-20250926-WA0018.jpg",
+      "IMG-20250926-WA0019.jpg","IMG-20250926-WA0020.jpg","IMG-20250926-WA0021.jpg","IMG-20250926-WA0022.jpg",
+      "IMG-20250926-WA0023.jpg","IMG-20250926-WA0024.jpg","IMG-20250926-WA0025.jpg","IMG-20250926-WA0026.jpg",
+      "IMG-20250926-WA0027.jpg","IMG-20250926-WA0028.jpg"
+    ];
+
+    /* قائمة الخلفيات/اللوغوهات (Ln=Logo, Bn=Banner) من مجلد backgs */
+    window.BGS_LIST = [
+      "L1.jpg","B1.jpg",
+      "L2.jpg","B2.jpg",
+      "L3.jpg","B3.jpg",
+      "L4.jpg","B4.jpg",
+      "L5.jpg","B5.jpg",
+      "L6.jpg","B6.jpg",
+      "L7.jpg","B7.jpg"
+    ];
+
+    /* قائمة النشرات من مجلد storis */
+    window.STORIS_LIST = [
+      // الترتيب المفضل لعرض البطاقات (تعليقات للتذكير بالمحتوى)
+      "IMG-20250929-WA0005.jpg", // عيدكم مبارك (أزرق)
+      "IMG-20250929-WA0010.jpg", // مرحبًا أصدقائي (أخضر)
+      "IMG-20250929-WA0012.jpg", // متوفر معكم (أزرق)
+      "صورة واتساب بتاريخ 1447-04-07 في 23.54.06_b38b55e2.jpg",
+      "IMG-20250929-WA0011.jpg",
+      "IMG-20250929-WA0003.jpg",
+      "IMG-20250929-WA0008.jpg",
+      "IMG-20250929-WA0004.jpg"
+    ];
+
+    // أحجام ملفات النشرات (للفرز حسب الحجم)
+    window.STORIS_SIZES = {
+      "IMG-20250929-WA0003.jpg": 118916,
+      "IMG-20250929-WA0004.jpg": 148481,
+      "IMG-20250929-WA0005.jpg": 49260,
+      "IMG-20250929-WA0008.jpg": 108918,
+      "IMG-20250929-WA0010.jpg": 43415,
+      "IMG-20250929-WA0011.jpg": 71386,
+      "IMG-20250929-WA0012.jpg": 83087,
+      "صورة واتساب بتاريخ 1447-04-07 في 23.54.06_b38b55e2.jpg": 171455
+    };
+
+    const FOLDER = "LOGOS";
+    const BG_FOLDER = "backgs";
+    const STORIS_FOLDER = "storis";
+    const grid = document.getElementById('grid');
+    const statusEl = document.getElementById('status');
+    const q = document.getElementById('q');
+
+    const bgGrid = document.getElementById('bg-grid');
+    const bgStatusEl = document.getElementById('bg-status');
+
+    const storiesGrid = document.getElementById('stories-grid');
+    const storiesStatusEl = document.getElementById('stories-status');
+    const STORY_ASPECT_OVERRIDES = {
+      "IMG-20250929-WA0011.jpg": "17 / 20",
+      "صورة واتساب بتاريخ 1447-04-07 في 23.54.06_b38b55e2.jpg": "17 / 20"
+    };
+
+    const lb = document.getElementById('lightbox');
+    const backdrop = document.getElementById('backdrop');
+    const lbImg = document.getElementById('lb-img');
+    const lbName = document.getElementById('lb-name');
+    const closeBtn = document.getElementById('close');
+
+    // منع السحب الأفقي (يبقى العمودي فقط)
+    (function preventHorizontalSwipe(){
+      let sx = null, sy = null;
+      document.addEventListener('touchstart', (e) => { const t=e.touches[0]; sx=t.clientX; sy=t.clientY; }, {passive:false});
+      document.addEventListener('touchmove',  (e) => {
+        if (sx===null) return;
+        const t=e.touches[0], dx=t.clientX-sx, dy=t.clientY-sy;
+        // Only call preventDefault when the event is cancelable to avoid
+        // Chrome's '[Intervention] Ignored attempt to cancel a touchmove' warning.
+        if (e.cancelable && Math.abs(dx) > Math.abs(dy)) e.preventDefault();
+      }, {passive:false});
+      document.addEventListener('touchend',   () => { sx=null; sy=null; }, {passive:true});
+    })();
+
+    function setStatus(msg){ statusEl.innerHTML = msg; }
+
+    function setBgStatus(msg){ if(bgStatusEl) bgStatusEl.innerHTML = msg; }
+
+    function setStoriesStatus(msg){ if(storiesStatusEl) storiesStatusEl.innerHTML = msg; }
+
+    function render(items){
+      grid.innerHTML = '';
+      const term = ((q && q.value) || '').trim().toLowerCase();
+      const filtered = term ? items.filter(n => n.toLowerCase().includes(term)) : items;
+
+      if (!filtered.length){ setStatus('لا توجد نتائج.'); }
+      else { statusEl.textContent = ''; }
+
+      for(const name of filtered){
+        const url = FOLDER + "/" + name;
+        const card = document.createElement('figure');
+        card.className = 'card';
+
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.alt = name;
+        img.style.opacity = '0';
+        img.onerror = () => card.remove();
+        img.addEventListener('load', () => { img.style.opacity = '1'; }, { once:true });
+        img.src = url;
+        // Hint the browser to paint only after decode when possible
+        if (img.decode) { img.decode().then(() => { img.style.opacity = '1'; }).catch(() => {}); }
+
+        card.appendChild(img);
+        grid.appendChild(card);
+
+        card.addEventListener('click', () => openLightbox(url, name));
+      }
+    }
+
+    // عرض الخلفيات (Backgs) بنسبة 16:9
+    function renderBgs(items){
+      if(!bgGrid) return;
+      bgGrid.innerHTML = '';
+      const term = ((q && q.value) || '').trim().toLowerCase();
+      const filtered = term ? items.filter(n => n.toLowerCase().includes(term)) : items;
+
+      // إعادة ترتيب حسب الأزواج: L1, B1, L2, B2...
+      const map = new Map();
+      for(const name of filtered){
+        const m = /^([lb])(\d+)\.(png|jpe?g|webp|svg)$/i.exec(name);
+        if(!m) continue;
+        const type = m[1].toUpperCase();
+        const num = parseInt(m[2],10);
+        if(!map.has(num)) map.set(num, {});
+        map.get(num)[type] = name;
+      }
+      const ordered = [];
+      for(const n of Array.from(map.keys()).sort((a,b)=>a-b)){
+        const pair = map.get(n);
+        if(pair.L) ordered.push(pair.L);
+        if(pair.B) ordered.push(pair.B);
+      }
+
+      if (!ordered.length){ setBgStatus('لا توجد نتائج.'); }
+      else if(bgStatusEl){ bgStatusEl.textContent = ''; }
+
+      for(const name of ordered){
+        const url = BG_FOLDER + "/" + name;
+        const isLogo = /^L\d+/i.test(name);
+
+        // غلاف العنصر + التسمية أعلى الصورة
+        const wrap = document.createElement('div');
+        wrap.className = 'bg-item';
+
+        const label = document.createElement('div');
+        label.className = 'bg-label';
+        label.textContent = isLogo ? 'Logo' : 'Banner';
+
+        const card = document.createElement('figure');
+        card.className = 'bg-card ' + (isLogo ? 'logo' : 'banner');
+
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.alt = name;
+        img.style.opacity = '0';
+        img.onerror = () => wrap.remove();
+        img.addEventListener('load', () => { img.style.opacity = '1'; }, { once:true });
+        img.src = url;
+        if (img.decode) { img.decode().then(() => { img.style.opacity = '1'; }).catch(() => {}); }
+
+        card.appendChild(img);
+        wrap.appendChild(label);
+        wrap.appendChild(card);
+        bgGrid.appendChild(wrap);
+
+        card.addEventListener('click', () => openLightbox(url, name));
+      }
+    }
+
+    // عرض النشرات: شبكة صفوف (3 في الأول، 2 في الوسط، وأخيرة مستطيلة)
+    function renderStories(items){
+      if(!storiesGrid) return;
+      storiesGrid.innerHTML = '';
+      const term = ((q && q.value) || '').trim().toLowerCase();
+      const filtered = term ? items.filter(n => n.toLowerCase().includes(term)) : items;
+
+      // حافظ على الترتيب اليدوي كما في STORIS_LIST بدون فرز تلقائي
+      const ordered = filtered.slice();
+
+      if (!ordered.length){ setStoriesStatus('لا توجد نتائج.'); }
+      else if(storiesStatusEl){ storiesStatusEl.textContent = ''; }
+
+      // شبكة الصفوف: صف أول ثلاثي، يليه صفوف ثنائية، مع بطاقة أخيرة مستطيلة بالأسفل
+      const TARGET_STORY = 'IMG-20250929-WA0004.jpg';
+      const PORTRAIT_STORY = 'صورة واتساب بتاريخ 1447-04-07 في 23.54.06_b38b55e2.jpg';
+      const SQUARE_PAIR_STORY = 'IMG-20250929-WA0011.jpg';
+      const ROUNDED_STORIES = new Set([
+        PORTRAIT_STORY,
+        SQUARE_PAIR_STORY
+      ]);
+      const TALL_PAIR = new Set([PORTRAIT_STORY, SQUARE_PAIR_STORY]);
+
+      const createStoryCard = (name) => {
+        const url = STORIS_FOLDER + "/" + name;
+        const card = document.createElement('figure');
+        card.className = 'story-card' + (ROUNDED_STORIES.has(name) ? ' rounded' : '');
+        card.dataset.name = name;
+
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.alt = name;
+        img.style.opacity = '0';
+        img.onerror = () => card.remove();
+        img.addEventListener('load', () => { img.style.opacity = '1'; }, { once:true });
+        img.src = url;
+        if (img.decode) { img.decode().then(() => { img.style.opacity = '1'; }).catch(() => {}); }
+
+        card.appendChild(img);
+        card.addEventListener('click', () => openLightbox(url, name));
+        return card;
+      };
+
+      const rows = [];
+      const targetIndex = ordered.indexOf(TARGET_STORY);
+      let targetName = null;
+      if (targetIndex !== -1){
+        targetName = ordered.splice(targetIndex, 1)[0];
+      }
+
+      const firstRowCount = Math.min(3, ordered.length);
+      if(firstRowCount){
+        const row = document.createElement('div');
+        row.className = "story-row row-" + firstRowCount;
+        for(let i=0; i<firstRowCount; i++){
+          row.appendChild(createStoryCard(ordered.shift()));
+        }
+        rows.push(row);
+      }
+
+      while(ordered.length >= 2){
+        const firstName = ordered.shift();
+        const secondName = ordered.shift();
+        const row = document.createElement('div');
+        row.className = 'story-row row-2';
+
+        const firstCard = createStoryCard(firstName);
+        const secondCard = createStoryCard(secondName);
+        const isTallPair = TALL_PAIR.has(firstName) && TALL_PAIR.has(secondName);
+
+        if(isTallPair){
+          row.classList.add('story-row-tall-pair');
+          const portraitFirst = firstName === PORTRAIT_STORY;
+          row.classList.add(portraitFirst ? 'story-row-tall-pair--portrait-first' : 'story-row-tall-pair--square-first');
+          if(portraitFirst){
+            firstCard.classList.add('story-card-portrait');
+            secondCard.classList.add('story-card-paired-square');
+          } else {
+            firstCard.classList.add('story-card-paired-square');
+            secondCard.classList.add('story-card-portrait');
+          }
+        }
+
+        row.appendChild(firstCard);
+        row.appendChild(secondCard);
+        rows.push(row);
+      }
+
+      if(ordered.length === 1){
+        const lone = ordered.shift();
+        if(rows.length){
+          const lastRow = rows[rows.length - 1];
+          if(lastRow.classList.contains('row-2') && lastRow.children.length === 1){
+            lastRow.appendChild(createStoryCard(lone));
+          } else {
+            const singleRow = document.createElement('div');
+            singleRow.className = 'story-row row-1';
+            singleRow.appendChild(createStoryCard(lone));
+            rows.push(singleRow);
+          }
+        } else {
+          const singleRow = document.createElement('div');
+          singleRow.className = 'story-row row-1';
+          singleRow.appendChild(createStoryCard(lone));
+          rows.push(singleRow);
+        }
+      }
+
+      for(const row of rows){
+        storiesGrid.appendChild(row);
+      }
+
+      if(targetName){
+        const finalRow = document.createElement('div');
+        finalRow.className = 'story-row row-1 story-row-final';
+        const finalCard = createStoryCard(targetName);
+        finalCard.classList.add('story-card-wide');
+        const finalImg = finalCard.querySelector('img');
+        if(finalImg){ finalImg.classList.add('story-img-wide'); }
+        finalRow.appendChild(finalCard);
+        storiesGrid.appendChild(finalRow);
+      }
+    }
+
+    function openLightbox(url, name){
+      lbImg.src = url;
+      backdrop.hidden = false; lb.showModal();
+    }
+    function closeLightbox(){
+      lb.close(); backdrop.hidden = true; lbImg.src = '';
+    }
+    backdrop.addEventListener('click', closeLightbox);
+    closeBtn.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', e => { if(e.key === 'Escape' && lb.open) closeLightbox(); });
+
+    if (q) q.addEventListener('input', () => window.__ALL__ && render(window.__ALL__));
+    if (q) q.addEventListener('input', () => window.__BGS_ALL__ && renderBgs(window.__BGS_ALL__));
+    if (q) q.addEventListener('input', () => window.__STORIS_ALL__ && renderStories(window.__STORIS_ALL__));
+
+    function init(){
+      setStatus('جاري التحميل…');
+      let files = Array.isArray(window.FILE_LIST) ? window.FILE_LIST.slice() : [];
+      files = files.filter(n => /\.(png|jpe?g|webp|svg)$/i.test(n));
+      files = [...new Set(files)];
+      window.__ALL__ = files;
+      if(!files.length){ setStatus('أضف صورك إلى مجلد LOGOS أو عدّل FILE_LIST.'); return; }
+      render(files);
+    }
+
+    function initBGS(){
+      setBgStatus('جاري التحميل…');
+      let files = Array.isArray(window.BGS_LIST) ? window.BGS_LIST.slice() : [];
+      files = files.filter(n => /\.(png|jpe?g|webp|svg)$/i.test(n));
+      files = [...new Set(files)];
+      window.__BGS_ALL__ = files;
+      if(!files.length){ setBgStatus('أضف خلفياتك إلى مجلد backgs أو عدّل BGS_LIST.'); return; }
+      renderBgs(files);
+    }
+
+    function initSTORIS(){
+      setStoriesStatus('جاري التحميل…');
+      let files = Array.isArray(window.STORIS_LIST) ? window.STORIS_LIST.slice() : [];
+      files = files.filter(n => /\.(png|jpe?g|webp|svg)$/i.test(n));
+      files = [...new Set(files)];
+      window.__STORIS_ALL__ = files;
+      if(!files.length){ setStoriesStatus('أضف صورك إلى مجلد storis أو عدّل STORIS_LIST.'); return; }
+      renderStories(files);
+    }
+
+    // تهيئة قسم القصص مع الصفوف المُخصّصة
+
+    init();
+    initBGS();
+    initSTORIS();
+  </script>
+</body>
+</html>

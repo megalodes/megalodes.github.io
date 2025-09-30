@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <title>LOGOS — معرض 3×</title>
+  <!-- Arabic-friendly font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#0b0c0f; --ink:#e9eef7; --muted:#9aa3b2;
+      --card:#111318; --radius:28px;
+      --brand:#1569C7; /* لون التدرّج المطلوب */
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f6f8fb; --ink:#0b0c0f; --muted:#556074; --card:#ffffff; }
+    }
+
+    /* منع السحب/القلب الأفقي */
+    html,body{
+      margin:0; padding:0; color:var(--ink);
+      /* خلفية افتراضية + تثبيت كاحتياط */
+      background: linear-gradient(45deg,
+        #f3f6ff 0%,
+        #dde9ff 28%,
+        #b9d2fb 55%,
+        var(--brand) 100%
+      );
+      background-attachment: fixed; /* يبقي الخلفية ثابتة في المتصفحات الداعمة */
+      overflow-x:hidden; overscroll-behavior-x:none; touch-action:pan-y;
+      font-family:"Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial
+    }
+
+    /* طبقة خلفية ثابتة 100% تعمل أيضاً على iOS/Safari */
+    body::before{
+      content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+      background: linear-gradient(45deg,
+        #f3f6ff 0%,
+        #dde9ff 28%,
+        #b9d2fb 55%,
+        var(--brand) 100%
+      );
+    }
+    *{box-sizing:border-box}
+
+    /* هيدر بسيط */
+    /* هيدر أزرق غامق مريح */
+    .hero{position:sticky; top:0; z-index:3; background:linear-gradient(135deg,#0a214a 0%,#0b2f73 60%,#0a214a 100%); border-bottom:1px solid #ffffff14; margin:0}
+    .wrap{max-width:1400px; margin:0 auto; padding:14px 16px}
+    .hero .wrap{ max-width:none; padding-left:0; padding-right:0 }
+    .bar{display:flex; align-items:center; gap:12px}
+    /* ترويسة جديدة: الصورة دائرية يسارًا ومعلومات تواصل */
+    .contact-bar{ direction:ltr; justify-content:flex-start }
+    /* دويرة بارزة حول اللوغو (الأفاتار) */
+    .avatar{ width:56px; height:56px; border-radius:999px; object-fit:cover; border:2px solid #ffffff22; box-shadow:0 0 0 3px color-mix(in oklab, var(--brand) 82%, #000 10%), 0 8px 22px #0008 }
+    .contact{ direction:rtl; display:flex; align-items:center; gap:28px }
+    .contact .c-item{ color:var(--muted); font-size:14px; line-height:1.2; display:flex; align-items:center; gap:6px; direction:ltr }
+    .contact .c-item svg{ width:14px; height:14px; color:var(--ink) }
+
+    /* الشبكة: 3 أعمدة دائمًا */
+    .gallery{max-width:1400px; margin:0 auto; padding:22px 10px 60px}
+    .grid{display:grid; gap:8px; grid-template-columns:repeat(3, 1fr)}
+
+    /* Backgs section: wide thumbnails */
+    .bg-grid{display:grid; gap:8px; grid-template-columns:9fr 16fr; direction:ltr}
+    .bg-card{
+      position:relative; aspect-ratio:16/9; width:96%; margin:0 auto;
+      border-radius:var(--radius); background:var(--card);
+      border:1px solid #2a2f3a; box-shadow:0 22px 60px rgba(0,0,0,.40);
+      overflow:hidden; cursor:zoom-in; transition:.18s ease;
+    }
+    .bg-card.logo{ aspect-ratio:1/1 }
+    .bg-card.banner{ aspect-ratio:16/9 }
+    .bg-card:hover{ transform:translateY(-3px) }
+    .bg-card img{ width:100%; height:100%; display:block; object-fit:cover; border-radius:0; transition:opacity .25s ease }
+
+    /* عناوين فوق عناصر قسم الخلفيات (Backgs) فقط */
+    .bg-card.logo::before,
+    .bg-card.banner::before{
+      position:absolute; top:8px; left:10px; z-index:2;
+      font-size:13px; line-height:1; font-weight:800;
+      color:var(--ink); background:#0009; padding:6px 10px;
+      border-radius:999px; letter-spacing:.2px;
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+    }
+    .bg-card.logo::before{ content:'Logo :'; }
+    .bg-card.banner::before{ content:'Baner :'; }
+
+    /* Stories section: مربعات بشكل افتراضي، ونعدّل غير المربعات */
+    .story-grid{display:grid; gap:8px; grid-template-columns:repeat(3, 1fr)}
+    .story-card{
+      position:relative; aspect-ratio:1/1; width:96%; margin:0 auto;
+      border-radius:var(--radius); background:var(--card);
+      border:1px solid #2a2f3a; box-shadow:0 22px 60px rgba(0,0,0,.40);
+      overflow:hidden; cursor:zoom-in; transition:.18s ease;
+    }
+    .story-card:hover{ transform:translateY(-3px) }
+    .story-card img{ width:100%; height:100%; display:block; object-fit:cover; border-radius:0; transition:opacity .25s ease }
+    /* غير المربعات */
+    .story-card.portrait{ aspect-ratio:9/16 }
+    .story-card.landscape{ aspect-ratio:16/9 }
+    
+
+    /* البطاقة: مربع بزوايا مستديرة — التدوير على الحاوية فقط */
+    .card{
+      position:relative; aspect-ratio:1/1;
+      margin:0 auto; /* إزالة الهامش الجانبي وتوسيط الكرت */
+      width:96%;     /* تصغير الكرت نفسه قليلًا */
+      border-radius:var(--radius);
+      background:var(--card);
+      border:1px solid #2a2f3a;            /* يوضح أركان المربّع */
+      box-shadow:0 22px 60px rgba(0,0,0,.40);
+      overflow:hidden;                      /* يقص الصورة داخل المربّع */
+      cursor:zoom-in; transition:.18s ease;
+    }
+    .card:hover{ transform:translateY(-3px) }
+
+    /* الصورة: لا أي تدوير ولا ماسك */
+    .card img{
+      width:100%; height:100%; display:block;
+      object-fit:cover;     /* تعبئة المربع */
+      border-radius:0;      /* مهم: لمنع الشكل الدائري */
+      /* ممنوع: mask-image / clip-path / border-radius كبير */
+      transition:opacity .25s ease;
+    }
+
+    .status{text-align:center; color:var(--muted); padding:24px 10px; font-size:14px}
+    .section-title{ margin:6px 12px 10px; color:var(--muted); font-weight:800; font-size:15px }
+
+    /* لايت بوكس */
+    dialog#lightbox{ border:none; padding:0; background:transparent }
+    dialog#lightbox[open]{ position:fixed; inset:0; display:grid; place-items:center; background:transparent }
+    .lb-backdrop{ position:fixed; inset:0; background:#000b; backdrop-filter:blur(2px) }
+    .lb-card{ width:auto; max-width:90vw; max-height:90vh; background:var(--card); border-radius:32px; overflow:hidden; border:1px solid #ffffff2a; display:flex; flex-direction:column; align-items:center }
+    .lb-img{ display:block; width:auto; height:auto; max-width:90vw; max-height:calc(90vh - 56px); object-fit:contain; background:#0b0b0b; margin:0 auto; border-radius:24px }
+    .lb-bar{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 16px; border-top:1px solid #ffffff14 }
+    .lb-name{ display:none }
+    @media (min-width: 900px){
+      .lb-card{ max-width:70vw }
+      .lb-img{ max-width:70vw }
+
+      /* على الكمبيوتر: اجعل ارتفاع البنر مساوٍ لارتفاع اللوغو في الصف نفسه */
+      .bg-grid{ align-items:stretch }
+      .bg-card.banner{ height:100%; aspect-ratio:auto }
+    }
+    .btn{background:linear-gradient(180deg, color-mix(in oklab, var(--card) 86%, transparent), color-mix(in oklab, var(--card) 100%, #000 6%)); border:1px solid #ffffff24; color:var(--ink); border-radius:999px; padding:10px 14px; font-weight:700; cursor:pointer}
+
+    /* موبايل: تكبير أكثر مع 3 أعمدة */
+    @media (max-width: 600px){
+      :root{ --radius:14px; }
+      .gallery{ padding:8px 10px 50px; }
+      .grid{ grid-template-columns:repeat(3, 1fr); gap:4px; }
+      .bg-grid{ grid-template-columns:9fr 16fr; gap:4px }
+    }
+
+    /* شاشات أصغر جدًا: عمودان لزيادة حجم الصور بشكل واضح */
+    @media (max-width: 400px){
+      .grid{ grid-template-columns:repeat(3, 1fr); gap:2px; }
+      .bg-grid{ grid-template-columns:9fr 16fr; gap:2px }
+    }
+
+    /* كمبيوتر: شبكة أوسع وعدة أعمدة */
+    @media (min-width: 1024px){
+      .grid{ grid-template-columns:repeat(5, 1fr); gap:12px; }
+      .bg-grid{ grid-template-columns:1fr 2fr; gap:12px }
+      .card, .bg-card{ width:100% }
+    }
+
+    /* شاشات كبيرة جدًا */
+    @media (min-width: 1600px){
+      .grid{ grid-template-columns:repeat(6, 1fr); gap:14px }
+      .lb-card{ max-width:60vw }
+      .lb-img{ max-width:60vw }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="bar contact-bar">
+        <img class="avatar" src="LOGOS/IMG-20250926-WA0002.jpg" alt="profile" />
+        <div class="contact">
+          <div class="c-item" title="WhatsApp">
+            <svg viewBox="0 0 16 16" fill="currentColor" class="bi bi-whatsapp" aria-hidden="true">
+              <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+            </svg>
+            *****
+          </div>
+          <div class="c-item" title="Instagram">
+            <svg viewBox="0 0 16 16" fill="currentColor" class="bi bi-instagram" aria-hidden="true">
+              <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/>
+            </svg>
+            *****
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="gallery">
+    <h2 class="section-title">LOGO</h2>
+    <div id="grid" class="grid"></div>
+    <div id="status" class="status">جاري التحميل…</div>
+  </main>
+
+  <!-- Backgs Section -->
+  <section class="gallery" id="bgs">
+    <h2 class="section-title">LOGO & COVER</h2>
+    <div id="bg-grid" class="bg-grid"></div>
+    <div id="bg-status" class="status">جاري التحميل…</div>
+  </section>
+
+  <!-- Stories Section -->
+  <section class="gallery" id="stories">
+    <h2 class="section-title">POSTERS SOCIAL MEDIA</h2>
+    <div id="stories-grid" class="story-grid"></div>
+    <div id="stories-status" class="status">جاري التحميل…</div>
+  </section>
+
+
+
+  <!-- Lightbox -->
+  <div id="backdrop" class="lb-backdrop" hidden></div>
+  <dialog id="lightbox">
+    <div class="lb-card">
+      <img id="lb-img" class="lb-img" alt="logo preview" />
+      <div class="lb-bar">
+        <span id="lb-name" class="lb-name" style="color:var(--muted);font-size:13px"></span>
+        <button class="btn" id="close">إغلاق</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    /* حدّث القائمة حسب ملفاتك داخل مجلد LOGOS */
+    window.FILE_LIST = [
+      "IMG-20250926-WA0002.jpg", /* تمت إضافة اللوغو الناقص */
+      "IMG-20250926-WA0003.jpg","IMG-20250926-WA0004.jpg","IMG-20250926-WA0005.jpg","IMG-20250926-WA0006.jpg",
+      "IMG-20250926-WA0007.jpg","IMG-20250926-WA0008.jpg","IMG-20250926-WA0009.jpg","IMG-20250926-WA0010.jpg",
+      "IMG-20250926-WA0011.jpg","IMG-20250926-WA0012.jpg","IMG-20250926-WA0013.jpg","IMG-20250926-WA0014.jpg",
+      "IMG-20250926-WA0015.jpg","IMG-20250926-WA0016.jpg","IMG-20250926-WA0017.jpg","IMG-20250926-WA0018.jpg",
+      "IMG-20250926-WA0019.jpg","IMG-20250926-WA0020.jpg","IMG-20250926-WA0021.jpg","IMG-20250926-WA0022.jpg",
+      "IMG-20250926-WA0023.jpg","IMG-20250926-WA0024.jpg","IMG-20250926-WA0025.jpg","IMG-20250926-WA0026.jpg",
+      "IMG-20250926-WA0027.jpg","IMG-20250926-WA0028.jpg"
+    ];
+
