@@ -100,7 +100,8 @@
     .bg-card.banner::before{ content:none !important }
 
     /* عنصر التفاف لكل بطاقة خلفيات + تسمية أعلى الصورة */
-    .bg-item{ width:88%; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start }
+    /* اجعل الإطار خلف Logo/Banner ممتدًا بكامل عرض العمود على كل المقاسات */
+    .bg-item{ width:100%; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start }
     .bg-label{
       display:inline-block; margin:0 0 4px 0; margin-inline-start:0; /* محاذاة بداية الصورة */
       font-size:10px; font-weight:800; line-height:1.2; /* مساحة رأسية أوضح */
@@ -298,6 +299,14 @@
       .story-row.row-1{
         width:clamp(250px, 90vw, 40rem);
       }
+    }
+
+    /* شارات Logo/Banner: استخدم الخط العادي بدل TS */
+    .bg-label{
+      font-family: "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: none;
     }
 
     /* شاشات أصغر جدًا: هوامش أصغر للمربعات */
