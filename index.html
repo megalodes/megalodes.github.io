@@ -79,11 +79,13 @@
     /* الشبكة: 3 أعمدة دائمًا */
     .gallery{max-width:1400px; margin:0 auto; padding:22px 10px 60px}
     .grid{display:grid; gap:8px; grid-template-columns:repeat(3, 1fr)}
+    /* اجعل عناوين الأقسام باللون الأبيض الصافي */
+    .section-title{ color:#fff; }
 
     /* Backgs section: wide thumbnails */
     .bg-grid{display:grid; gap:8px; grid-template-columns:9fr 16fr; direction:ltr}
     .bg-card{
-      position:relative; aspect-ratio:16/9; width:96%; margin:0 auto;
+      position:relative; aspect-ratio:16/9; width:100%; margin:0 auto;
       border-radius:var(--radius); background:var(--card);
       border:1px solid #2a2f3a; box-shadow:0 22px 60px rgba(0,0,0,.40);
       overflow:hidden; cursor:zoom-in; transition:.18s ease;
@@ -98,13 +100,13 @@
     .bg-card.banner::before{ content:none !important }
 
     /* عنصر التفاف لكل بطاقة خلفيات + تسمية أعلى الصورة */
-    .bg-item{ width:96%; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start }
+    .bg-item{ width:88%; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start }
     .bg-label{
-      display:inline-block; margin:0 0 6px 0;
-      font-size:13px; font-weight:800; line-height:1.2; /* مساحة رأسية أوضح */
-      color:var(--ink); background: color-mix(in oklab, var(--card) 88%, transparent);
-      border:1px solid #ffffff22; border-radius:999px; padding:6px 10px;
-      letter-spacing:.2px;
+      display:inline-block; margin:0 0 4px 0; margin-inline-start:0; /* محاذاة بداية الصورة */
+      font-size:10px; font-weight:800; line-height:1.2; /* مساحة رأسية أوضح */
+      color:#fff; background: color-mix(in oklab, var(--card) 88%, transparent); /* احتفظ بالدائرة كما هي */
+      border:1px solid #ffffff22; border-radius:999px; padding:4px 8px; /* محاذاة بالدائرة وليس النص */
+      letter-spacing:.2px; align-self:flex-start;
     }
     /* اجعل البطاقة داخل الغلاف بعرض كامل */
     .bg-item > .bg-card{ width:100%; margin:0 }
@@ -337,7 +339,8 @@
     .anti-ss-on .lb-img{ opacity:0 !important; background:#fff !important; }
   </style>
   <style>
-    /* تصغير تذييل الشكر على الهواتف */
+    /* تصغير تذييل الشكر على الهواتف + إضافة مسافة أسفل الرسالة */
+    .thanks{ font-size:13px; display:inline-block; margin-bottom:12px; }
     @media (max-width: 600px){
       footer{ font-size:14px; line-height:1.35; padding:10px 0; }
       footer a{ font-size:14px; }
@@ -784,11 +787,11 @@
     initBGS();
     initSTORIS();
   </script>
-  <footer style="text-align:center; padding:16px 0; color: var(--muted); font-weight:700;">
-    Thank you for watching
+  <footer style="text-align:center; margin-top:32px; padding:12px 0; color: var(--muted); font-weight:700;">
+    <span class="thanks">Thank you for watching</span>
     <br />
     <a href="https://wa.me/962790108559" target="_blank" rel="noopener"
-       style="color:var(--brand); text-decoration:underline; font-weight:700; font-family: 'Cairo', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;">
+       style="display:inline-block; margin-top:8px; color:var(--brand); text-decoration:underline; font-weight:700; font-family: 'Cairo', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;">
        برمجة LaithDev
      </a>
   </footer>
@@ -878,17 +881,6 @@
   <!-- إزالة حظر الكيبورد نهائيًا لعدم تعطيل أدوات المطوّر -->
  </body>
   </html>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
