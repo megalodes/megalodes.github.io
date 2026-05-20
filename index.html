@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-store" />
-  <title>ميغالو ديزاين</title>
+  <title>تصاميم ميغالو</title>
   <!-- Arabic-friendly font -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,55 +20,61 @@
     :root{
       --bg:#0e0b1a; --ink:#e9e6f4; --muted:#b3adc9;
       --card:#17132a; --radius:28px;
-      --brand:#6b55a3; /* تدرّج أرجواني يطابق الصورة الجديدة */
+      --brand:#6b55a3;
     }
     @media (prefers-color-scheme: light){
       :root{ --bg:#f7f5fb; --ink:#141025; --muted:#7a7398; --card:#ffffff; }
     }
 
-    /* منع السحب/القلب الأفقي */
     html,body{
       margin:0; padding:0; color:var(--ink);
-      /* خلفية أخفّ للحفاظ على السرعة مع بقاء التدرج */
       background:
-        radial-gradient(820px circle at 0% 0%, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0) 52%),
-        linear-gradient(120deg, #0f0b1d 0%, #16132b 45%, #211c39 100%);
-      background-repeat:no-repeat;
+        linear-gradient(rgba(181,165,255,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(181,165,255,.055) 1px, transparent 1px),
+        linear-gradient(120deg, #090614 0%, #120d25 48%, #1a1430 100%);
+      background-size:44px 44px,44px 44px,auto;
+      background-repeat:repeat,repeat,no-repeat;
       background-attachment:fixed;
       overflow-x:hidden; overscroll-behavior-x:none; touch-action:pan-y;
       font-family:"TS Block Bold", "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      line-height:1.35; /* منع ضغط النص عموديًا */
+      line-height:1.35;
       font-size:18px;
     }
 
-    body{ position:relative; }
+    body{ position:relative; padding-top:112px; }
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      background:
+        radial-gradient(520px circle at 8% 8%, color-mix(in oklab,var(--brand) 24%, transparent), transparent 62%),
+        radial-gradient(620px circle at 92% 14%, rgba(124,108,210,.14), transparent 58%),
+        radial-gradient(680px circle at 52% 108%, rgba(255,255,255,.05), transparent 64%);
+      opacity:.82;
+    }
     *{box-sizing:border-box}
+    body > *{position:relative;z-index:1}
 
-    /* هيدر بسيط */
-    /* هيدر أزرق غامق مريح */
     .hero{position:sticky; top:0; z-index:3; background:linear-gradient(135deg,#16122a 0%,#231c3d 60%,#16122a 100%); border-bottom:1px solid #ffffff14; margin:0}
     .wrap{max-width:1400px; margin:0 auto; padding:14px 16px}
     .hero .wrap{ max-width:none; padding-left:0; padding-right:0; padding-top:20px; padding-bottom:20px }
     .bar{display:flex; align-items:center; gap:16px}
-    /* ترويسة جديدة: الصورة دائرية يسارًا ومعلومات تواصل */
     .contact-bar{ direction:ltr; justify-content:flex-start; padding-left:24px }
-    /* دويرة بارزة حول اللوغو (الأفاتار) */
     .avatar{ width:72px; height:72px; border-radius:999px; object-fit:cover; border:2px solid #ffffff22; box-shadow:0 0 0 3px color-mix(in oklab, var(--brand) 82%, #000 10%), 0 8px 22px #0008 }
     .contact{ direction:rtl; display:flex; align-items:center; gap:28px }
     .contact .c-item{ color:var(--muted); font-size:16px; line-height:1.2; display:flex; align-items:center; gap:6px; direction:ltr }
     .contact .c-item svg{ width:16px; height:16px; color:var(--ink) }
     .contact .c-item a{ color:#ffffff; font-weight:700; text-decoration:none }
-    /* استخدم الخط الافتراضي (Cairo/النظام) لقسم التواصل بدلاً من TS */
     .contact, .contact .c-item, .contact .c-item a{
       font-family: "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       font-weight:600;
     }
     .contact .c-item a:hover{ text-decoration:underline }
 
-    /* الشبكة: 3 أعمدة دائمًا */
-    .gallery{max-width:1400px; margin:0 auto; padding:22px 10px 60px}
+    .gallery{max-width:1400px; margin:0 auto; padding:22px 10px 60px; background:transparent}
     .grid{display:grid; gap:8px; grid-template-columns:repeat(3, 1fr)}
-    /* اجعل عناوين الأقسام باللون الأبيض الصافي */
     .section-title{ color:#fff; }
 
     /* Backgs section: wide thumbnails */
@@ -84,29 +90,23 @@
     .bg-card:hover{ transform:translateY(-3px) }
     .bg-card img{ width:100%; height:100%; display:block; object-fit:cover; border-radius:0; transition:opacity .25s ease }
 
-    /* إلغاء الشارات فوق الصور لصالح تسميات أعلى الصور */
     .bg-card.logo::before,
     .bg-card.banner::before{ content:none !important }
 
-    /* عنصر التفاف لكل بطاقة خلفيات + تسمية أعلى الصورة */
-    /* اجعل الإطار خلف Logo/Banner ممتدًا بكامل عرض العمود على كل المقاسات */
     .bg-item{ width:100%; margin:0 auto; display:flex; flex-direction:column; align-items:flex-start }
     .bg-label{
-      display:inline-block; margin:0 0 4px 0; margin-inline-start:0; /* محاذاة بداية الصورة */
-      font-size:10px; font-weight:800; line-height:1.2; /* مساحة رأسية أوضح */
-      color:#fff; background: color-mix(in oklab, var(--card) 88%, transparent); /* احتفظ بالدائرة كما هي */
-      border:1px solid #ffffff22; border-radius:999px; padding:4px 8px; /* محاذاة بالدائرة وليس النص */
+      display:inline-block; margin:0 0 4px 0; margin-inline-start:0;
+      font-size:10px; font-weight:800; line-height:1.2;
+      color:#fff; background: color-mix(in oklab, var(--card) 88%, transparent);
+      border:1px solid #ffffff22; border-radius:999px; padding:4px 8px;
       letter-spacing:.2px; align-self:flex-start;
     }
-    /* اجعل البطاقة داخل الغلاف بعرض كامل */
     .bg-item > .bg-card{ width:100%; margin:0 }
 
-    /* Stories section: صف أول بثلاث صور، بقية الصفوف صورتان، والأخيرة مفردة */
     .story-grid{display:flex; flex-direction:column; gap:10px; direction:ltr}
     .story-row{display:grid; gap:6px; width:100%}
     .story-row.row-3{grid-template-columns:repeat(3, minmax(0, 1fr))}
     .story-row.row-2{grid-template-columns:repeat(2, minmax(0, 1fr))}
-    /* السطر الثالث: تكبير اليسار 10px وتصغير اليمين 10px */
     .story-grid > .story-row:nth-of-type(3).row-2{
       grid-template-columns: calc(50% + 10px) calc(50% - 10px);
     }
@@ -136,17 +136,13 @@
     .story-img-wide{ 
       object-fit:cover; 
     }
-    /* حواف أكثر دائرية لبطاقة معيّنة */
     .story-card.rounded{ border-radius:34px }
     .story-card:hover{ transform:translateY(-3px) }
     .story-card img{ width:100%; height:100%; display:block; object-fit:contain; background:var(--card); border-radius:inherit; transition:opacity .25s ease }
-    /* عرض كامل للبوسترات بدون قص */
     #stories .story-card, #stories .story-card img{ border-radius:var(--radius) }
     #stories .story-card img{ object-fit:contain }
-    /* صور مخصّصة للعرض الكامل بدون قص */
     #stories .story-card.contain img{ object-fit:contain !important }
     
-    /* تخصيص الصف الثاني لإبراز الصورة العمودية وشريكها */
     .story-row-tall-pair{
       align-items:center;
       justify-content:center;
@@ -179,33 +175,29 @@
     
     
 
-    /* البطاقة: مربع بزوايا مستديرة — التدوير على الحاوية فقط */
     .card{
       position:relative; aspect-ratio:1/1;
-      margin:0 auto; /* إزالة الهامش الجانبي وتوسيط الكرت */
-      width:96%;     /* تصغير الكرت نفسه قليلًا */
+      margin:0 auto;
+      width:96%;
       border-radius:var(--radius);
       background:var(--card);
-      border:1px solid #2a2f3a;            /* يوضح أركان المربّع */
+      border:1px solid #2a2f3a;
       box-shadow:0 22px 60px rgba(0,0,0,.40);
-      overflow:hidden;                      /* يقص الصورة داخل المربّع */
+      overflow:hidden;
       cursor:zoom-in; transition:.18s ease;
     }
     .card:hover{ transform:translateY(-3px) }
 
-    /* الصورة: لا أي تدوير ولا ماسك */
     .card img{
       width:100%; height:100%; display:block;
-      object-fit:cover;     /* تعبئة المربع */
-      border-radius:0;      /* مهم: لمنع الشكل الدائري */
-      /* ممنوع: mask-image / clip-path / border-radius كبير */
+      object-fit:cover;
+      border-radius:0;
       transition:opacity .25s ease;
     }
 
     .status{text-align:center; color:var(--muted); padding:12px 10px; font-size:14px}
     .status:empty{ display:none }
 
-    /* عنوان مع شارة خلفية (نيون) */
     h1, h2, h3, h4, h5, h6{ color:#ffffff }
     .section-title{
       margin:26px auto 26px; color:#ffffff; font-weight:900; font-size:24px;
@@ -218,61 +210,55 @@
     @media (min-width: 900px){
       .section-title{ font-size:28px; padding:14px 34px 16px }
     }
-    /* تحسين المسافات بين الأقسام */
     .gallery{ padding:24px 12px 28px }
-    /* زيادة الفصل بين الأقسام التالية */
     .gallery + .gallery{ margin-top:32px }
 
-    /* لايت بوكس */
-    dialog#lightbox{ border:none; padding:0; background:transparent }
-    dialog#lightbox[open]{ position:fixed; inset:0; display:grid; place-items:center; background:transparent }
-    .lb-backdrop{ position:fixed; inset:0; background:#000b; backdrop-filter:blur(2px) }
-    .lb-card{ width:auto; max-width:90vw; max-height:90vh; background:var(--card); border-radius:32px; overflow:hidden; border:1px solid #ffffff2a; display:flex; flex-direction:column; align-items:center }
-    .lb-img{ display:block; width:auto; height:auto; max-width:90vw; max-height:calc(90vh - 56px); object-fit:contain; background:#0b0b0b; margin:0 auto; border-radius:24px }
-    .lb-bar{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 16px; border-top:1px solid #ffffff14 }
+    dialog#lightbox{ border:none; padding:0; background:transparent; overflow:hidden; scrollbar-width:none }
+    dialog#lightbox::-webkit-scrollbar,.lb-card::-webkit-scrollbar{display:none}
+    dialog#lightbox[open]{ position:fixed; inset:0; display:grid; place-items:center; background:transparent; overflow:hidden }
+    .lb-backdrop{ position:fixed; inset:0; z-index:1000; background:#000b; backdrop-filter:blur(2px) }
+    .lb-card{ position:relative; width:auto; max-width:90vw; max-height:90vh; background:var(--card); border-radius:32px; overflow:hidden; scrollbar-width:none; border:1px solid #ffffff2a; display:flex; flex-direction:column; align-items:center }
+    .lb-img{ display:block; width:auto; height:auto; max-width:90vw; max-height:90vh; object-fit:contain; background:#0b0b0b; margin:0 auto; border-radius:24px }
+    .lb-bar{ position:absolute; top:12px; left:12px; z-index:3; display:flex; align-items:center; justify-content:center; gap:0; padding:0; border-top:0 }
     .lb-name{ display:none }
     @media (min-width: 900px){
       .lb-card{ max-width:70vw }
       .lb-img{ max-width:70vw }
 
-      /* على الكمبيوتر: اجعل ارتفاع البنر مساوٍ لارتفاع اللوغو في الصف نفسه */
       .bg-grid{ align-items:stretch }
       .bg-card.banner{ height:100%; aspect-ratio:auto }
     }
+    dialog#lightbox[open]{z-index:1001}
+    #close{position:relative;width:42px;height:42px;padding:0;border-radius:999px;display:block;background:rgba(10,8,20,.38);border:1px solid rgba(255,255,255,.26);color:transparent;font-size:0;box-shadow:0 12px 32px rgba(0,0,0,.25);backdrop-filter:blur(16px)}
+    #close::before{content:"\00d7";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-family:Arial,sans-serif;font-size:28px;line-height:1;font-weight:400}
+    #close:hover{transform:translateY(-2px);border-color:color-mix(in oklab,var(--brand) 72%,#fff 20%);box-shadow:0 16px 38px color-mix(in oklab,var(--brand) 30%,transparent)}
     .btn{background:linear-gradient(180deg, color-mix(in oklab, var(--card) 86%, transparent), color-mix(in oklab, var(--card) 100%, #000 6%)); border:1px solid #ffffff24; color:var(--ink); border-radius:999px; padding:10px 14px; font-weight:700; cursor:pointer}
 
-    /* موبايل: توزيع أوضح مع أعمدة تلقائية */
     @media (max-width: 600px){
       :root{ --radius:14px; }
-      /* على الهاتف: اجعل العناوين في الوسط وبخط TS الجديد */
+      body{ padding-top:86px; }
       h1, h2, h3, h4, h5, h6,
       .section-title{
         text-align:center;
         margin-left:auto; margin-right:auto;
         font-family:"TS Block Bold", "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-        font-weight:normal; /* تأكد من استخدام ملف الخط الجديد */
-        /* اجعل العنوان يلتف ولا يُقصّ على الشاشات الصغيرة */
-        width:auto;               /* إلغاء max-content */
+        font-weight:normal;
+        width:auto;
         max-width:100%;
         white-space:normal;
-        overflow-wrap:anywhere;   /* يسمح بالتفاف الكلمات الطويلة */
+        overflow-wrap:anywhere;
       }
-      /* تحسين شريط الترويسة على الشاشات الصغيرة */
       .bar{ gap:12px }
-      /* صورة على اليسار والمعلومات على يمينها */
       .bar.contact-bar{ flex-direction:row; align-items:center; justify-content:flex-start; padding-left:10px; padding-right:10px; direction:ltr }
       .avatar{ width:56px; height:56px; box-shadow:0 0 0 2px color-mix(in oklab, var(--brand) 82%, #000 10%), 0 6px 18px #0008 }
-      /* جعل الرقم والإنستغرام متوازيين ومصغّرين ليتّسعا */
       .contact{ flex-direction:row; align-items:center; justify-content:flex-start; gap:10px; direction:ltr; flex-wrap:nowrap }
       .contact .c-item{ gap:6px; font-size:13px }
       .contact .c-item svg{ width:14px; height:14px }
       .contact .c-item a{ white-space:nowrap }
-      /* إبراز حساب إنستغرام */
       .contact .c-item[title="Instagram"] a{
         font-family:"Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
         font-weight:600; letter-spacing:0; font-size:13px; text-transform:none;
       }
-      /* تصغير رقم واتساب ومنع تقطيعه إلى أسطر متعددة */
       .contact .c-item[title="WhatsApp"] a{
         font-family:"Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
         font-size:13px; opacity:.95; white-space:nowrap; direction:ltr; font-weight:600;
@@ -280,7 +266,6 @@
       .gallery{ padding:8px 10px 24px; }
       .grid{ grid-template-columns:repeat(3, 1fr); gap:4px; }
       .bg-grid{ grid-template-columns:9fr 16fr; gap:4px }
-      /* للهاتف: الحفاظ على التوزيع مع تقليل الهوامش */
       .story-grid{ gap:8px }
       .story-row{ gap:5px }
       .story-card.rounded{ border-radius:26px }
@@ -289,7 +274,6 @@
       }
     }
 
-    /* شارات Logo/Banner: استخدم الخط العادي بدل TS */
     .bg-label{
       font-family: "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       font-weight: 700;
@@ -297,14 +281,12 @@
       text-transform: none;
     }
 
-    /* شاشات أصغر جدًا: هوامش أصغر للمربعات */
     @media (max-width: 400px){
       .grid{ grid-template-columns:repeat(3, 1fr); gap:2px; }
       .bg-grid{ grid-template-columns:9fr 16fr; gap:2px }
       .story-row{ gap:4px }
     }
 
-    /* كمبيوتر: شبكة أوسع وعدة أعمدة */
     @media (min-width: 1024px){
       .grid{ grid-template-columns:repeat(5, 1fr); gap:12px; }
       .bg-grid{ grid-template-columns:1fr 2fr; gap:12px }
@@ -314,7 +296,6 @@
       }
     }
 
-    /* شاشات كبيرة جدًا */
     @media (min-width: 1600px){
       .grid{ grid-template-columns:repeat(6, 1fr); gap:14px }
       .lb-card{ max-width:60vw }
@@ -324,21 +305,178 @@
       }
     }
 
-    /* منع سحب/تنزيل الصور عبر الواجهة */
     img{
       -webkit-user-drag: none;
       user-drag: none;
       -webkit-touch-callout: none;
       user-select: none;
     }
-    /* عند تفعيل الحماية: اجعل صورة اللايت بوكس بيضاء/مخفية */
     .anti-ss-on dialog#lightbox .lb-card{ background:#fff !important; }
     .anti-ss-on .lb-img{ opacity:0 !important; background:#fff !important; }
   </style>
   <style>
-    /* تصغير تذييل الشكر على الهواتف + إضافة مسافة أسفل الرسالة */
-    .thanks{ font-size:13px; display:inline-block; margin-bottom:12px; }
+    .thanks{ font-size:13px; display:inline-block; margin-bottom:12px; font-family:"TS Block Bold","Cairo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial; font-weight:normal; letter-spacing:0 }
+    .dynamic-section{margin-bottom:34px}
+    .dynamic-rows{display:grid;gap:10px}
+    .dynamic-row{display:grid;direction:ltr;gap:8px;align-items:start;margin:0;width:100%;max-width:100%}
+    .dynamic-card{position:relative;width:100%;margin:0;aspect-ratio:var(--ratio, 1);border-radius:var(--radius);background:var(--card);border:1px solid #2a2f3a;box-shadow:0 22px 60px rgba(0,0,0,.35);overflow:hidden;cursor:zoom-in;transition:.18s ease;animation:cardFloat 5.6s ease-in-out infinite}
+    .dynamic-row .dynamic-card:nth-child(2n){animation-delay:.7s}
+    .dynamic-row .dynamic-card:nth-child(3n){animation-delay:1.25s}
+    .dynamic-card:hover{animation-play-state:paused;transform:translateY(-6px)}
+    .dynamic-card img{width:100%;height:100%;display:block;object-fit:cover;border-radius:inherit;transition:opacity .25s ease}
+    .dynamic-label{position:absolute;top:10px;left:10px;z-index:2;display:inline-block;margin:0;font-size:10px;font-weight:800;line-height:1.2;color:#fff;background:color-mix(in oklab,var(--card) 88%,transparent);border:1px solid #ffffff36;border-radius:999px;padding:4px 8px;box-shadow:0 8px 22px rgba(0,0,0,.28);pointer-events:none}
+    @keyframes cardFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+    @media (max-width: 760px){.dynamic-row{gap:4px;max-width:100% !important}.dynamic-label{top:7px;left:7px;font-size:9px;padding:3px 7px}}
+
+    .hero{
+      position:fixed;
+      top:14px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:20;
+      width:min(1180px,92%);
+      margin:0;
+      background:transparent;
+      border-bottom:0;
+    }
+    .hero .wrap{max-width:none;padding:0}
+    .contact-bar{
+      direction:ltr;
+      justify-content:space-between;
+      gap:18px;
+      padding:14px 28px;
+      background:
+        linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.025) 46%,rgba(107,85,163,.11)),
+        rgba(16,10,36,.44);
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:999px;
+      backdrop-filter:blur(28px) saturate(145%);
+      -webkit-backdrop-filter:blur(28px) saturate(145%);
+      box-shadow:0 24px 80px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.12), 0 0 42px color-mix(in oklab,var(--brand) 22%,transparent);
+    }
+    .avatar{
+      order:3;
+      width:52px;
+      height:52px;
+      border-radius:999px;
+      border:1px solid color-mix(in oklab,var(--brand) 68%,#fff 18%);
+      box-shadow:0 0 28px color-mix(in oklab,var(--brand) 72%,transparent);
+      flex:0 0 auto;
+      margin-inline-end:8px;
+    }
+    .site-brand{
+      order:2;
+      margin-inline-start:auto;
+      margin-inline-end:2px;
+      font-family:"Cairo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      text-align:right;
+    }
+    .site-brand strong{display:block;color:#fff;font-size:18px;line-height:1.1;font-weight:900}
+    .site-brand small{display:block;color:var(--muted);font-size:13px;font-weight:600;margin-top:4px}
+    .contact{
+      order:1;
+      direction:ltr;
+      gap:10px;
+      margin-inline-start:8px;
+      margin-inline-end:0;
+    }
+    .contact .c-item{
+      position:relative;
+      width:40px;
+      height:40px;
+      padding:0;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.22);
+      transition:.25s;
+    }
+    .contact .c-item:hover{
+      transform:translateY(-2px);
+      background:linear-gradient(135deg,var(--brand),color-mix(in oklab,var(--brand) 54%,#fff 24%));
+      box-shadow:0 14px 34px color-mix(in oklab,var(--brand) 48%,transparent);
+    }
+    .contact .c-item svg{position:absolute;top:50%;left:50%;width:17px;height:17px;margin:0;color:#fff;transform:translate(-50%,-50%);pointer-events:none}
+    .contact .c-item a{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+      white-space:nowrap;
+      text-indent:110%;
+    }
+    body > footer{
+      background:transparent !important;
+      margin-top:32px !important;
+      padding:36px 0 44px !important;
+      color:var(--muted) !important;
+      font-family:"Cairo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial !important;
+    }
+    body > footer a{
+      position:relative !important;
+      overflow:hidden !important;
+      display:inline-flex !important;
+      flex-direction:row-reverse !important;
+      align-items:center !important;
+      justify-content:center !important;
+      gap:12px !important;
+      margin-top:18px !important;
+      padding:14px 22px !important;
+      border-radius:999px !important;
+      color:#f4efff !important;
+      text-decoration:none !important;
+      font-size:16px !important;
+      font-weight:900 !important;
+      background:linear-gradient(135deg,color-mix(in oklab,var(--brand) 25%,transparent),color-mix(in oklab,var(--brand) 18%,#000 8%)) !important;
+      border:1px solid color-mix(in oklab,var(--brand) 58%,#fff 14%) !important;
+      backdrop-filter:blur(18px) !important;
+      box-shadow:0 14px 42px color-mix(in oklab,var(--brand) 20%,transparent),inset 0 1px 0 rgba(255,255,255,.16) !important;
+      transition:.28s !important;
+    }
+    body > footer a::before{content:none !important}
+    .dev-icon{
+      width:34px;
+      height:34px;
+      border-radius:13px;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      background:linear-gradient(135deg,var(--brand),color-mix(in oklab,var(--brand) 52%,#fff 28%));
+      box-shadow:0 0 22px color-mix(in oklab,var(--brand) 52%,transparent);
+      color:#fff;
+      flex:0 0 auto;
+      margin-inline-start:0;
+      position:relative;
+      z-index:1;
+    }
+    .dev-icon svg{width:22px;height:22px;display:block;position:relative;z-index:2}
+    body > footer a::after{
+      content:"";
+      position:absolute;
+      top:0;
+      right:-90%;
+      width:70%;
+      height:100%;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
+      transform:skewX(-18deg);
+      transition:.6s;
+    }
+    body > footer a:hover{
+      transform:translateY(-5px) scale(1.02);
+      color:#fff !important;
+      border-color:color-mix(in oklab,var(--brand) 76%,#fff 18%) !important;
+      box-shadow:0 22px 60px color-mix(in oklab,var(--brand) 34%,transparent),inset 0 1px 0 rgba(255,255,255,.22) !important;
+    }
+    body > footer a:hover::after{right:120%}
+
     @media (max-width: 600px){
+      .hero{top:6px;width:94%}
+      .contact-bar{min-height:70px;padding:12px 18px;border-radius:999px}
+      .avatar{width:43px;height:43px;border-radius:999px;margin-inline-end:4px}
+      .site-brand strong{font-size:15px}
+      .site-brand small{font-size:11px}
+      .contact{gap:8px;margin-inline-start:4px}
+      .contact .c-item{width:38px;height:38px;border-radius:999px}
       footer{ font-size:14px; line-height:1.35; padding:10px 0; }
       footer a{ font-size:14px; }
     }
@@ -349,6 +487,10 @@
     <div class="wrap">
       <div class="bar contact-bar">
         <img class="avatar" src="صورة واتساب بتاريخ 1447-04-06 في 13.40.02_835061ea.jpg" alt="profile" />
+        <div class="site-brand">
+          <strong>Megalo Des's</strong>
+          <small>Design Gallery</small>
+        </div>
         <div class="contact">
           <div class="c-item" title="WhatsApp">
             <svg viewBox="0 0 16 16" fill="currentColor" class="bi bi-whatsapp" aria-hidden="true">
@@ -367,28 +509,9 @@
     </div>
   </header>
 
-  <!-- Packages Section -->
-  <section class="gallery" id="bgs">
-    <h2 class="section-title">backgs</h2>
-    <div id="bg-grid" class="bg-grid"></div>
-    <div id="bg-status" class="status">جاري التحميل…</div>
-  </section>
-
-  <!-- Stories Section -->
-  <section class="gallery" id="stories">
-    <h2 class="section-title">posters</h2>
-    <div id="stories-grid" class="story-grid"></div>
-    <div id="stories-status" class="status">جاري التحميل…</div>
-  </section>
-
-  <!-- Logos Section -->
-  <section class="gallery" id="logos">
-    <h2 class="section-title">: other logo's</h2>
-    <div id="grid" class="grid"></div>
-    <div id="status" class="status">جاري التحميل…</div>
-  </section>
-
-
+  <main class="gallery" id="dynamicGalleryRoot">
+    <div id="dynamicGalleryStatus" class="status"></div>
+  </main>
 
   <!-- Lightbox -->
   <div id="backdrop" class="lb-backdrop" hidden></div>
@@ -403,364 +526,26 @@
   </dialog>
 
   <script>
-    /* حدّث القائمة حسب ملفاتك داخل مجلد logo */
-    window.FILE_LIST = [
-      "1.jpeg","2.jpeg","3.jpeg","4.jpeg","5.jpeg","6.jpeg","7.jpeg","8.jpeg","9.jpeg"
-    ];
-
-    /* قائمة الخلفيات/اللوغوهات (Ln=Logo, Bn=Banner) من مجلد newbackgs */
-    window.BGS_LIST = [
-      "L1.jpeg","B1.jpeg",
-      "L2.jpeg","B2.jpeg",
-      "L3.jpeg","B3.jpeg",
-      "L4.jpeg","B4.jpeg",
-      "L5.jpeg","B5.jpeg",
-      "L6.jpeg","B6.jpeg",
-      "L7.jpeg","B7.jpeg",
-      "L8.jpeg","B8.jpeg",
-      "L9.jpeg","B9.jpeg",
-      "L10.jpeg","B10.jpeg",
-      "L11.jpeg",
-      "B12.jpeg",
-      "L13.jpeg","B13.jpeg",
-      "L14.jpeg","B14.jpeg"
-    ];
-
-    /* قائمة النشرات من مجلد posters */
-    window.STORIS_LIST = [
-      // الترتيب المفضل لعرض البطاقات (تعليقات للتذكير بالمحتوى)
-      "WhatsApp Image 2025-12-05 at 10.23.35 PM.jpeg",
-      "WhatsApp Image 2025-12-05 at 10.23.40 PM.jpeg",
-      "WhatsApp Image 2025-12-05 at 10.23.42 PM.jpeg",
-      "WhatsApp Image 2025-12-05 at 10.23.43 PM.jpeg",
-      "WhatsApp Image 2025-12-05 at 10.23.44 PM (1).jpeg",
-      "WhatsApp Image 2025-12-05 at 10.23.45 PM.jpeg",
-      "WhatsApp Image 2025-12-05 at 10.23.45 PM (1).jpeg",
-      "WhatsApp Image 2025-12-05 at 10.23.45 PM (2).jpeg",
-      "WhatsApp Image 2025-12-05 at 10.23.46 PM.jpeg",
-      "WhatsApp Image 2025-12-05 at 10.23.46 PM (1).jpeg",
-      "WhatsApp Image 2025-12-05 at 10.23.46 PM (2).jpeg",
-      "WhatsApp Image 2025-12-05 at 10.23.47 PM.jpeg"
-    ];
-
-    // أحجام ملفات النشرات (للفرز حسب الحجم)
-    window.STORIS_SIZES = {};
-
-    const FOLDER = "logo";
-    const BG_FOLDER = "newbackgs";
-    const STORIS_FOLDER = "posters";
-    const grid = document.getElementById('grid');
-    const statusEl = document.getElementById('status');
-    const q = document.getElementById('q');
-
-    const bgGrid = document.getElementById('bg-grid');
-    const bgStatusEl = document.getElementById('bg-status');
-
-    const storiesGrid = document.getElementById('stories-grid');
-    const storiesStatusEl = document.getElementById('stories-status');
-    const STORY_ASPECT_OVERRIDES = {
-      // جميع البوسترات ~1000x780 — زيد الارتفاع قليلاً لراحة العرض
-      "WhatsApp Image 2025-12-05 at 10.23.35 PM.jpeg": "4 / 5",
-      "WhatsApp Image 2025-12-05 at 10.23.40 PM.jpeg": "4 / 5",
-      "WhatsApp Image 2025-12-05 at 10.23.42 PM.jpeg": "4 / 5",
-      "WhatsApp Image 2025-12-05 at 10.23.43 PM.jpeg": "4 / 5",
-      "WhatsApp Image 2025-12-05 at 10.23.44 PM (1).jpeg": "4 / 5",
-      "WhatsApp Image 2025-12-05 at 10.23.45 PM.jpeg": "4 / 5",
-      "WhatsApp Image 2025-12-05 at 10.23.45 PM (1).jpeg": "4 / 5",
-      "WhatsApp Image 2025-12-05 at 10.23.45 PM (2).jpeg": "4 / 5",
-      "WhatsApp Image 2025-12-05 at 10.23.46 PM.jpeg": "4 / 5",
-      "WhatsApp Image 2025-12-05 at 10.23.46 PM (1).jpeg": "4 / 5",
-      "WhatsApp Image 2025-12-05 at 10.23.46 PM (2).jpeg": "4 / 5",
-      "WhatsApp Image 2025-12-05 at 10.23.47 PM.jpeg": "4 / 5"
-    };
-
-
+    const GALLERY_API_BASE = (window.MEGALO_API_BASE || "https://megalo.laithqarqaz1.workers.dev").replace(/\/+$/, "");
+    const galleryRoot = document.getElementById('dynamicGalleryRoot');
+    const galleryStatus = document.getElementById('dynamicGalleryStatus');
     const lb = document.getElementById('lightbox');
     const backdrop = document.getElementById('backdrop');
     const lbImg = document.getElementById('lb-img');
     const lbName = document.getElementById('lb-name');
     const closeBtn = document.getElementById('close');
-
-    // منع السحب الأفقي (يبقى العمودي فقط)
-    (function preventHorizontalSwipe(){
-      let sx = null, sy = null;
-      document.addEventListener('touchstart', (e) => { const t=e.touches[0]; sx=t.clientX; sy=t.clientY; }, {passive:false});
-      document.addEventListener('touchmove',  (e) => {
-        if (sx===null) return;
-        const t=e.touches[0], dx=t.clientX-sx, dy=t.clientY-sy;
-        // Only call preventDefault when the event is cancelable to avoid
-        // Chrome's '[Intervention] Ignored attempt to cancel a touchmove' warning.
-        if (e.cancelable && Math.abs(dx) > Math.abs(dy)) e.preventDefault();
-      }, {passive:false});
-      document.addEventListener('touchend',   () => { sx=null; sy=null; }, {passive:true});
-    })();
-
-    function setStatus(msg){ statusEl.innerHTML = msg; }
-
-    function setBgStatus(msg){ if(bgStatusEl) bgStatusEl.innerHTML = msg; }
-
-    function setStoriesStatus(msg){ if(storiesStatusEl) storiesStatusEl.innerHTML = msg; }
-
-    function render(items){
-      grid.innerHTML = '';
-      const term = ((q && q.value) || '').trim().toLowerCase();
-      const filtered = term ? items.filter(n => n.toLowerCase().includes(term)) : items;
-
-      if (!filtered.length){ setStatus('لا توجد نتائج.'); }
-      else { statusEl.textContent = ''; }
-
-      for(const name of filtered){
-        const url = FOLDER + "/" + name;
-        const card = document.createElement('figure');
-        card.className = 'card';
-
-        const img = document.createElement('img');
-        img.loading = 'lazy';
-        img.alt = name;
-        img.style.opacity = '0';
-        img.onerror = () => card.remove();
-        img.addEventListener('load', () => { img.style.opacity = '1'; }, { once:true });
-        img.src = url;
-        // Hint the browser to paint only after decode when possible
-        if (img.decode) { img.decode().then(() => { img.style.opacity = '1'; }).catch(() => {}); }
-
-        card.appendChild(img);
-        grid.appendChild(card);
-
-        card.addEventListener('click', () => openLightbox(url, name));
-      }
-    }
-
-    // عرض الخلفيات (Backgs) بنسبة 16:9
-    function renderBgs(items){
-      if(!bgGrid) return;
-      bgGrid.innerHTML = '';
-      const term = ((q && q.value) || '').trim().toLowerCase();
-      const filtered = term ? items.filter(n => n.toLowerCase().includes(term)) : items;
-
-      // إعادة ترتيب حسب الأزواج: L1, B1, L2, B2...
-      const map = new Map();
-      for(const name of filtered){
-        const m = /^([lb])(\d+)\.(png|jpe?g|webp|svg)$/i.exec(name);
-        if(!m) continue;
-        const type = m[1].toUpperCase();
-        const num = parseInt(m[2],10);
-        if(!map.has(num)) map.set(num, {});
-        map.get(num)[type] = name;
-      }
-      const ordered = [];
-      for(const n of Array.from(map.keys()).sort((a,b)=>a-b)){
-        const pair = map.get(n);
-        if(pair.L) ordered.push(pair.L);
-        if(pair.B) ordered.push(pair.B);
-      }
-
-      if (!ordered.length){ setBgStatus('لا توجد نتائج.'); }
-      else if(bgStatusEl){ bgStatusEl.textContent = ''; }
-
-      for(const name of ordered){
-        const url = BG_FOLDER + "/" + name;
-        const isLogo = /^L\d+/i.test(name);
-
-        // غلاف العنصر + التسمية أعلى الصورة
-        const wrap = document.createElement('div');
-        wrap.className = 'bg-item';
-
-        const label = document.createElement('div');
-        label.className = 'bg-label';
-        label.textContent = isLogo ? 'Logo' : 'Banner';
-
-        const card = document.createElement('figure');
-        card.className = 'bg-card ' + (isLogo ? 'logo' : 'banner');
-
-        const img = document.createElement('img');
-        img.loading = 'lazy';
-        img.alt = name;
-        img.style.opacity = '0';
-        img.onerror = () => wrap.remove();
-        img.addEventListener('load', () => { img.style.opacity = '1'; }, { once:true });
-        img.src = url;
-        if (img.decode) { img.decode().then(() => { img.style.opacity = '1'; }).catch(() => {}); }
-
-        card.appendChild(img);
-        wrap.appendChild(label);
-        wrap.appendChild(card);
-        bgGrid.appendChild(wrap);
-
-        card.addEventListener('click', () => openLightbox(url, name));
-      }
-    }
-
-    // عرض النشرات: شبكة صفوف (3 في الأول، السطر الثاني 3 صور، ثم 2 في البقية، وأخيرة مستطيلة)
-    function renderStories(items){
-      if(!storiesGrid) return;
-      storiesGrid.innerHTML = '';
-      const term = ((q && q.value) || '').trim().toLowerCase();
-      const filtered = term ? items.filter(n => n.toLowerCase().includes(term)) : items;
-
-      // حافظ على الترتيب اليدوي كما في STORIS_LIST بدون فرز تلقائي
-      const ordered = filtered.slice();
-
-      if (!ordered.length){ setStoriesStatus('لا توجد نتائج.'); }
-      else if(storiesStatusEl){ storiesStatusEl.textContent = ''; }
-
-      // شبكة الصفوف: صف أول ثلاثي، السطر الثاني ثلاثي (حسب الطلب)، ثم صفوف ثنائية، مع بطاقة أخيرة مستطيلة بالأسفل
-      const TARGET_STORY = null;
-      const ROUNDED_STORIES = new Set();
-
-      const createStoryCard = (name) => {
-        const url = STORIS_FOLDER + "/" + name;
-        const card = document.createElement('figure');
-                card.className = 'story-card' + (ROUNDED_STORIES.has(name) ? ' rounded' : '');
-        card.dataset.name = name;
-
-        const overrideAspect = STORY_ASPECT_OVERRIDES[name];
-        if (overrideAspect) {
-          card.style.setProperty('--story-aspect', overrideAspect);
-        }
-        // لا حاجة لتخصيصات عرض إضافية للبوسترات الجديدة
-
-        const img = document.createElement('img');
-        img.loading = 'lazy';
-        img.alt = name;
-        img.style.opacity = '0';
-        img.onerror = () => card.remove();
-        img.addEventListener('load', () => { img.style.opacity = '1'; }, { once:true });
-        img.src = url;
-        if (img.decode) { img.decode().then(() => { img.style.opacity = '1'; }).catch(() => {}); }
-
-        card.appendChild(img);
-        card.addEventListener('click', () => openLightbox(url, name));
-        return card;
-      };
-
-      const rows = [];
-      const targetIndex = ordered.indexOf(TARGET_STORY);
-      let targetName = null;
-      if (targetIndex !== -1){
-        targetName = ordered.splice(targetIndex, 1)[0];
-      }
-
-      const firstRowCount = Math.min(3, ordered.length);
-      if(firstRowCount){
-        const row = document.createElement('div');
-        row.className = "story-row row-" + firstRowCount;
-        for(let i=0; i<firstRowCount; i++){
-          row.appendChild(createStoryCard(ordered.shift()));
-        }
-        rows.push(row);
-      }
-
-      // السطر الثاني: 3 صور (لتصبح 3 صور كما طُلِب)
-      if (ordered.length >= 3) {
-        const row = document.createElement('div');
-        row.className = 'story-row row-3';
-        for (let i = 0; i < 3; i++) {
-          row.appendChild(createStoryCard(ordered.shift()));
-        }
-        rows.push(row);
-      }
-
-      while(ordered.length >= 2){
-        const firstName = ordered.shift();
-        const secondName = ordered.shift();
-        const row = document.createElement('div');
-        row.className = 'story-row row-2';
-
-        const firstCard = createStoryCard(firstName);
-        const secondCard = createStoryCard(secondName);
-
-        row.appendChild(firstCard);
-        row.appendChild(secondCard);
-        rows.push(row);
-      }
-
-      if(ordered.length === 1){
-        const lone = ordered.shift();
-        if(rows.length){
-          const lastRow = rows[rows.length - 1];
-          if(lastRow.classList.contains('row-2') && lastRow.children.length === 1){
-            lastRow.appendChild(createStoryCard(lone));
-          } else {
-            const singleRow = document.createElement('div');
-            singleRow.className = 'story-row row-1';
-            singleRow.appendChild(createStoryCard(lone));
-            rows.push(singleRow);
-          }
-        } else {
-          const singleRow = document.createElement('div');
-          singleRow.className = 'story-row row-1';
-          singleRow.appendChild(createStoryCard(lone));
-          rows.push(singleRow);
-        }
-      }
-
-      for(const row of rows){
-        storiesGrid.appendChild(row);
-      }
-
-      if(targetName){
-        const finalRow = document.createElement('div');
-        finalRow.className = 'story-row row-1 story-row-final';
-        const finalCard = createStoryCard(targetName);
-        finalCard.classList.add('story-card-wide');
-        const finalImg = finalCard.querySelector('img');
-        if(finalImg){ finalImg.classList.add('story-img-wide'); }
-        finalRow.appendChild(finalCard);
-        storiesGrid.appendChild(finalRow);
-      }
-    }
-
-    function openLightbox(url, name){
-      lbImg.src = url;
-      backdrop.hidden = false; lb.showModal();
-    }
-    function closeLightbox(){
-      lb.close(); backdrop.hidden = true; lbImg.src = '';
-    }
-    backdrop.addEventListener('click', closeLightbox);
-    closeBtn.addEventListener('click', closeLightbox);
-    document.addEventListener('keydown', e => { if(e.key === 'Escape' && lb.open) closeLightbox(); });
-
-    if (q) q.addEventListener('input', () => window.__ALL__ && render(window.__ALL__));
-    if (q) q.addEventListener('input', () => window.__BGS_ALL__ && renderBgs(window.__BGS_ALL__));
-    if (q) q.addEventListener('input', () => window.__STORIS_ALL__ && renderStories(window.__STORIS_ALL__));
-
-    function init(){
-      setStatus('جاري التحميل…');
-      let files = Array.isArray(window.FILE_LIST) ? window.FILE_LIST.slice() : [];
-      files = files.filter(n => /\.(png|jpe?g|webp|svg)$/i.test(n));
-      files = [...new Set(files)];
-      window.__ALL__ = files;
-      if(!files.length){ setStatus('أضف صورك إلى مجلد logo أو عدّل FILE_LIST.'); return; }
-      render(files);
-    }
-
-    function initBGS(){
-      setBgStatus('جاري التحميل…');
-      let files = Array.isArray(window.BGS_LIST) ? window.BGS_LIST.slice() : [];
-      files = files.filter(n => /\.(png|jpe?g|webp|svg)$/i.test(n));
-      files = [...new Set(files)];
-      window.__BGS_ALL__ = files;
-      if(!files.length){ setBgStatus('أضف خلفياتك إلى مجلد newbackgs أو عدّل BGS_LIST.'); return; }
-      renderBgs(files);
-    }
-
-    function initSTORIS(){
-      setStoriesStatus('جاري التحميل…');
-      let files = Array.isArray(window.STORIS_LIST) ? window.STORIS_LIST.slice() : [];
-      files = files.filter(n => /\.(png|jpe?g|webp|svg)$/i.test(n));
-      files = [...new Set(files)];
-      window.__STORIS_ALL__ = files;
-      if(!files.length){ setStoriesStatus('أضف صورك إلى مجلد posters أو عدّل STORIS_LIST.'); return; }
-      renderStories(files);
-    }
-
-    // تهيئة قسم القصص مع الصفوف المُخصّصة
-
-    initBGS();
-    initSTORIS();
-    init();
+    function setGalleryStatus(message){ if(galleryStatus) galleryStatus.textContent = message; }
+    function rowNumber(item){const row=Math.floor(Number(item&&item.row));return Number.isFinite(row)&&row>0?row:1;}
+    function itemRatio(item){const ratio=Number(item&&item.aspectRatio);return Number.isFinite(ratio)&&ratio>0?Math.min(Math.max(ratio,.25),4):1;}
+    function sortByOrder(items){return items.slice().sort((a,b)=>{const ar=rowNumber(a);const br=rowNumber(b);if(ar!==br)return ar-br;const ao=Number.isFinite(Number(a.order))?Number(a.order):0;const bo=Number.isFinite(Number(b.order))?Number(b.order):0;if(ao!==bo)return ao-bo;return String(a.createdAt||'').localeCompare(String(b.createdAt||''));});}
+    function orderedSections(gallery){const sections=gallery&&gallery.sections&&typeof gallery.sections==='object'?gallery.sections:{};const order=Array.isArray(gallery&&gallery.sectionOrder)?gallery.sectionOrder:Object.keys(sections);const output=[];for(const id of order){if(sections[id])output.push(sections[id]);}for(const [id,section] of Object.entries(sections)){if(!order.includes(id))output.push(section);}return sortByOrder(output);}
+    function groupedRows(items){const rows=new Map();for(const item of items){const row=rowNumber(item);if(!rows.has(row))rows.set(row,[]);rows.get(row).push(item);}return Array.from(rows.entries()).sort((a,b)=>a[0]-b[0]).map((entry)=>entry[1]);}
+    function rowMaxWidth(items){const ratios=items.reduce((sum,item)=>sum+itemRatio(item),0);const gaps=Math.max(0,items.length-1)*8;return Math.round(Math.min(1360,Math.max(280,ratios*455+gaps)));}
+    function renderGallery(gallery){const sections=orderedSections(gallery);galleryRoot.innerHTML='';galleryRoot.appendChild(galleryStatus);if(!sections.length){setGalleryStatus('\u0644\u0627 \u062a\u0648\u062c\u062f \u0623\u0642\u0633\u0627\u0645 \u062d\u0627\u0644\u064a\u0627.');return;}setGalleryStatus('');for(const section of sections){const items=sortByOrder(Object.values(section.items||{}).filter(item=>item&&item.imageUrl));if(!items.length)continue;const sectionEl=document.createElement('section');sectionEl.className='dynamic-section';const title=document.createElement('h2');title.className='section-title';title.textContent=section.title||'\u0642\u0633\u0645';sectionEl.appendChild(title);const rows=document.createElement('div');rows.className='dynamic-rows';sectionEl.appendChild(rows);for(const rowItems of groupedRows(items)){const rowEl=document.createElement('div');rowEl.className='dynamic-row';rowEl.style.gridTemplateColumns=rowItems.map((item)=>itemRatio(item)+'fr').join(' ');rowEl.style.setProperty('--row-max',rowMaxWidth(rowItems)+'px');for(const item of rowItems){const labelText=String(item.label||'').trim();const card=document.createElement('figure');card.className='dynamic-card';const ratio=itemRatio(item);card.style.setProperty('--ratio',String(ratio));if(labelText){const label=document.createElement('div');label.className='dynamic-label';label.textContent=labelText;card.appendChild(label);}const img=document.createElement('img');img.loading='lazy';img.alt=labelText||item.fileName||section.title||'\u0635\u0648\u0631\u0629';img.style.opacity='0';img.onerror=()=>card.remove();img.addEventListener('load',()=>{img.style.opacity='1';},{once:true});img.src=item.imageUrl;if(img.decode){img.decode().then(()=>{img.style.opacity='1';}).catch(()=>{});}card.appendChild(img);card.addEventListener('click',()=>openLightbox(item.imageUrl,labelText||item.fileName||section.title||''));rowEl.appendChild(card);}rows.appendChild(rowEl);}galleryRoot.appendChild(sectionEl);}if(!galleryRoot.querySelector('.dynamic-section'))setGalleryStatus('\u0644\u0627 \u062a\u0648\u062c\u062f \u0635\u0648\u0631 \u062d\u0627\u0644\u064a\u0627.');}
+    function openLightbox(url,name){lbImg.src=url;if(lbName)lbName.textContent=name||'';backdrop.hidden=false;lb.showModal();}
+    function closeLightbox(){lb.close();backdrop.hidden=true;lbImg.src='';}
+    backdrop.addEventListener('click',closeLightbox);closeBtn.addEventListener('click',closeLightbox);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.open)closeLightbox();});
+    (async function bootGallery(){setGalleryStatus('\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062d\u0645\u064a\u0644\u2026');try{const res=await fetch(GALLERY_API_BASE+'/gallery',{cache:'no-store'});const data=await res.json();if(!res.ok||!data.ok)throw new Error(data.error||('gallery '+res.status));renderGallery(data.gallery||{});}catch(error){console.warn('gallery_unavailable',error);setGalleryStatus('\u062a\u0639\u0630\u0631 \u062a\u062d\u0645\u064a\u0644 \u0627\u0644\u0623\u0642\u0633\u0627\u0645.');}})();
   </script>
   <footer style="text-align:center; margin-top:32px; padding:12px 0; color: var(--muted); font-weight:700;">
     <span class="thanks">Thank you for watching</span>
@@ -768,19 +553,22 @@
     <a href="https://wa.me/962790108559" target="_blank" rel="noopener"
        style="display:inline-block; margin-top:8px; color:var(--brand); text-decoration:underline; font-weight:700; font-family: 'Cairo', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;">
        برمجة LaithDev
+       <span class="dev-icon" aria-hidden="true">
+         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+           <path d="M8.7 7.8 4.5 12l4.2 4.2" stroke="currentColor" stroke-width="2.45" stroke-linecap="round" stroke-linejoin="round"/>
+           <path d="M15.3 7.8 19.5 12l-4.2 4.2" stroke="currentColor" stroke-width="2.45" stroke-linecap="round" stroke-linejoin="round"/>
+           <path d="M13.2 7.9 10.8 16.1" stroke="currentColor" stroke-width="2.45" stroke-linecap="round"/>
+         </svg>
+       </span>
      </a>
   </footer>
   <script>
-    // السماح بالنقر بزر الفأرة الأيمن وفتح أدوات المطور: إزالة أي حظر.
-    // ملاحظة: أبقينا فقط منع سحب الصور.
 
-    // منع سحب الصور لتنزيلها
     document.addEventListener('dragstart', (e) => {
       const t = e.target;
       if (t && t.tagName === 'IMG') e.preventDefault();
     }, true);
 
-    // اجعل الصور غير قابلة للسحب حتى لو أضيفت ديناميكيًا
     const disableImgDrag = () => {
       for (const img of document.images) img.setAttribute('draggable', 'false');
     };
@@ -788,16 +576,12 @@
     else disableImgDrag();
     new MutationObserver(disableImgDrag).observe(document.documentElement, { childList:true, subtree:true });
   </script>
-  <!-- إزالة طبقة التغطية البيضاء ومنع أي تأثيرات بيضاء عند فتح الأدوات -->
-  <!-- عنصر التغطية يُترك موجودًا لكنه غير مُستخدم -->
   <div id="anti-ss" aria-hidden="true" style="position:fixed;inset:0;opacity:0;pointer-events:none;z-index:-1;transition:opacity .18s ease;"></div>
   <script>
-    // تعطيل أي منطق سابق للتغطية البيضاء بالكامل
     window.__antiSSShow = () => {};
     window.__antiSSHide = () => {};
   </script>
   <script>
-    // كشف سحب ثلاث أصابع على الهواتف ثم تفتيح الشاشة 1 ثانية
     (function(){
       if (!('ontouchstart' in window)) return;
       const isPhone = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
@@ -853,7 +637,30 @@
       document.addEventListener('touchcancel',end,   { passive: true  });
     })();
   </script>
-  <!-- إزالة حظر الكيبورد نهائيًا لعدم تعطيل أدوات المطوّر -->
+  <script>
+    (() => {
+      const block = (event) => {
+        if (event && event.cancelable) event.preventDefault();
+        return false;
+      };
+
+      document.addEventListener('contextmenu', block, true);
+      document.addEventListener('keydown', (event) => {
+        const key = String(event.key || '').toLowerCase();
+        const code = String(event.code || '').toLowerCase();
+        const ctrlOrMeta = event.ctrlKey || event.metaKey;
+        const isF12 = key === 'f12' || code === 'f12';
+        const isDevToolsCombo =
+          ctrlOrMeta && event.shiftKey && ['i', 'j', 'c'].includes(key);
+        const isViewSource = ctrlOrMeta && key === 'u';
+        const isSavePage = ctrlOrMeta && key === 's';
+
+        if (isF12 || isDevToolsCombo || isViewSource || isSavePage) {
+          block(event);
+        }
+      }, true);
+    })();
+  </script>
  </body>
   </html>
 
