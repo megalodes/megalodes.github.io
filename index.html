@@ -6,20 +6,9 @@
   <meta http-equiv="Cache-Control" content="no-store" />
   <link rel="icon" type="image/png" href="1779387518667.png" />
   <title>تصاميم ميغالو</title>
-  <!-- Arabic-friendly font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    @font-face{
-      font-family: "TS Block Bold";
-      src: url("fonts/TS-Block-Bold.ttf") format("truetype");
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
-    }
     :root{
-      --bg:#0e0b1a; --ink:#e9e6f4; --muted:#b3adc9;
+      --bg:#0e0b1a; --ink:#e8e2f3; --muted:#b3adc9;
       --card:#17132a; --radius:28px;
       --brand:#6b55a3;
     }
@@ -37,7 +26,7 @@
       background-repeat:repeat,repeat,no-repeat;
       background-attachment:fixed;
       overflow-x:hidden; overscroll-behavior-x:none; touch-action:pan-y;
-      font-family:"TS Block Bold", "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      font-family:Arial, sans-serif;
       line-height:1.35;
       font-size:18px;
     }
@@ -67,16 +56,16 @@
     .contact{ direction:rtl; display:flex; align-items:center; gap:28px }
     .contact .c-item{ color:var(--muted); font-size:16px; line-height:1.2; display:flex; align-items:center; gap:6px; direction:ltr }
     .contact .c-item svg{ width:16px; height:16px; color:var(--ink) }
-    .contact .c-item a{ color:#ffffff; font-weight:700; text-decoration:none }
+    .contact .c-item a{ color:var(--ink); font-weight:400; text-decoration:none }
     .contact, .contact .c-item, .contact .c-item a{
-      font-family: "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      font-weight:600;
+      font-family:Arial, sans-serif;
+      font-weight:400;
     }
     .contact .c-item a:hover{ text-decoration:underline }
 
     .gallery{max-width:1400px; margin:0 auto; padding:22px 10px 60px; background:transparent}
     .grid{display:grid; gap:8px; grid-template-columns:repeat(3, 1fr)}
-    .section-title{ color:#fff; }
+    .section-title{ color:#e8e2f3; }
 
     /* Backgs section: wide thumbnails */
     .bg-grid{display:grid; gap:8px; grid-template-columns:9fr 16fr; direction:ltr}
@@ -199,10 +188,10 @@
     .status{text-align:center; color:var(--muted); padding:12px 10px; font-size:14px}
     .status:empty{ display:none }
 
-    h1, h2, h3, h4, h5, h6{ color:#ffffff }
+    h1, h2, h3, h4, h5, h6{ color:#e8e2f3 }
     .section-title{
-      margin:26px auto 26px 0; color:#ffffff; font-weight:400; font-size:24px;
-      font-family:Arial, "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      margin:26px auto 26px 0; color:#e8e2f3; font-weight:400; font-size:24px;
+      font-family:Arial, sans-serif;
       position:relative; width:max-content; text-align:left;
       padding:12px 28px 14px; letter-spacing:0; isolation:isolate;
     }
@@ -242,7 +231,7 @@
       h1, h2, h3, h4, h5, h6{
         text-align:center;
         margin-left:auto; margin-right:auto;
-        font-family:"TS Block Bold", "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        font-family:Arial, sans-serif;
         font-weight:normal;
         width:auto;
         max-width:100%;
@@ -253,7 +242,7 @@
         text-align:left;
         margin-left:0;
         margin-right:auto;
-        font-family:Arial, "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        font-family:Arial, sans-serif;
         font-weight:400;
         width:auto;
         max-width:100%;
@@ -268,12 +257,12 @@
       .contact .c-item svg{ width:14px; height:14px }
       .contact .c-item a{ white-space:nowrap }
       .contact .c-item[title="Instagram"] a{
-        font-family:"Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-        font-weight:600; letter-spacing:0; font-size:13px; text-transform:none;
+        font-family:Arial, sans-serif;
+        font-weight:400; letter-spacing:0; font-size:13px; text-transform:none;
       }
       .contact .c-item[title="WhatsApp"] a{
-        font-family:"Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-        font-size:13px; opacity:.95; white-space:nowrap; direction:ltr; font-weight:600;
+        font-family:Arial, sans-serif;
+        font-size:13px; opacity:.95; white-space:nowrap; direction:ltr; font-weight:400;
       }
       .gallery{ padding:8px 10px 24px; }
       .grid{ grid-template-columns:repeat(3, 1fr); gap:4px; }
@@ -287,8 +276,8 @@
     }
 
     .bg-label{
-      font-family: "Cairo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      font-weight: 700;
+      font-family:Arial, sans-serif;
+      font-weight: 400;
       letter-spacing: 0;
       text-transform: none;
     }
@@ -327,7 +316,7 @@
     .anti-ss-on .lb-img{ opacity:0 !important; background:#fff !important; }
   </style>
   <style>
-    .thanks{ font-size:13px; display:inline-block; margin-bottom:12px; font-family:"TS Block Bold","Cairo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial; font-weight:normal; letter-spacing:0 }
+    .thanks{ font-size:13px; display:inline-block; margin-bottom:12px; font-family:Arial,sans-serif; font-weight:normal; letter-spacing:0 }
     .dynamic-section{margin-bottom:34px}
     .dynamic-rows{display:grid;gap:10px}
     .dynamic-row{display:grid;direction:ltr;gap:8px;align-items:start;margin:0;width:100%;max-width:100%}
@@ -368,8 +357,8 @@
     }
     .avatar{
       order:3;
-      width:76px;
-      height:60px;
+      width:104px;
+      height:82px;
       border-radius:0;
       object-fit:contain;
       border:0;
@@ -384,11 +373,11 @@
       order:2;
       margin-inline-start:auto;
       margin-inline-end:2px;
-      font-family:"Cairo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      font-family:Arial,sans-serif;
       text-align:right;
     }
-    .site-brand strong{display:block;color:#fff;font-size:18px;line-height:1.1;font-weight:900}
-    .site-brand small{display:block;color:var(--muted);font-size:13px;font-weight:600;margin-top:4px}
+    .site-brand strong{display:block;color:#f0ebfb !important;font-size:18px;line-height:1.1;font-weight:400;opacity:1}
+    .site-brand small{display:block;color:#c9c0dc;font-size:13px;font-weight:400;margin-top:4px}
     .contact{
       order:1;
       direction:ltr;
@@ -426,7 +415,7 @@
       margin-top:32px !important;
       padding:36px 0 44px !important;
       color:var(--muted) !important;
-      font-family:"Cairo",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial !important;
+      font-family:Arial,sans-serif !important;
     }
     body > footer a{
       position:relative !important;
@@ -488,7 +477,7 @@
     @media (max-width: 600px){
       .hero{top:6px;width:94%}
       .contact-bar{min-height:70px;padding:12px 18px;border-radius:999px}
-      .avatar{width:56px;height:46px;border-radius:0;margin-inline-end:2px}
+      .avatar{width:76px;height:62px;border-radius:0;margin-inline-end:2px}
       .gallery{padding-left:3%;padding-right:3%}
       .site-brand strong{font-size:15px}
       .site-brand small{font-size:11px}
@@ -568,7 +557,7 @@
     <span class="thanks">Thank you for watching</span>
     <br />
     <a href="https://wa.me/962790108559" target="_blank" rel="noopener"
-       style="display:inline-block; margin-top:8px; color:var(--brand); text-decoration:underline; font-weight:700; font-family: 'Cairo', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;">
+       style="display:inline-block; margin-top:8px; color:var(--brand); text-decoration:underline; font-weight:700; font-family: Arial, sans-serif;">
        برمجة LaithDev
        <span class="dev-icon" aria-hidden="true">
          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
