@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-store" />
+  <link rel="icon" type="image/png" href="1779387518667.png" />
   <title>تصاميم ميغالو</title>
   <!-- Arabic-friendly font -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -356,14 +357,18 @@
     }
     .avatar{
       order:3;
-      width:52px;
+      width:66px;
       height:52px;
-      border-radius:999px;
-      border:1px solid color-mix(in oklab,var(--brand) 68%,#fff 18%);
-      box-shadow:0 0 28px color-mix(in oklab,var(--brand) 72%,transparent);
+      border-radius:0;
+      object-fit:contain;
+      border:0;
+      box-shadow:none;
+      filter:drop-shadow(0 10px 18px rgba(0,0,0,.34)) drop-shadow(0 0 16px color-mix(in oklab,var(--brand) 44%,transparent));
       flex:0 0 auto;
       margin-inline-end:8px;
+      animation:headerLogoFloat 4.8s ease-in-out infinite;
     }
+    @keyframes headerLogoFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-3px) scale(1.025)}}
     .site-brand{
       order:2;
       margin-inline-start:auto;
@@ -472,7 +477,8 @@
     @media (max-width: 600px){
       .hero{top:6px;width:94%}
       .contact-bar{min-height:70px;padding:12px 18px;border-radius:999px}
-      .avatar{width:43px;height:43px;border-radius:999px;margin-inline-end:4px}
+      .avatar{width:48px;height:40px;border-radius:0;margin-inline-end:2px}
+      .gallery{padding-left:3%;padding-right:3%}
       .site-brand strong{font-size:15px}
       .site-brand small{font-size:11px}
       .contact{gap:8px;margin-inline-start:4px}
@@ -486,7 +492,7 @@
   <header class="hero">
     <div class="wrap">
       <div class="bar contact-bar">
-        <img class="avatar" src="صورة واتساب بتاريخ 1447-04-06 في 13.40.02_835061ea.jpg" alt="profile" />
+        <img class="avatar" src="1779387518667.png" alt="profile" />
         <div class="site-brand">
           <strong>Megalo Des's</strong>
           <small>Design Gallery</small>
